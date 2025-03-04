@@ -56,11 +56,12 @@ namespace TrafficFines
 
                 result.Close();
                 dataGridViewCars.AutoGenerateColumns = false;
+                dataGridViewCars.DataSource = carList;
 
                 dataGridViewCars.Columns.Add(new DataGridViewTextBoxColumn
                 {
-                    HeaderText = "CarID",
-                    DataPropertyName = "Car ID",
+                    HeaderText = "Car ID",
+                    DataPropertyName = "Carid",
                     DisplayIndex = 0
                 });
                 dataGridViewCars.Columns.Add(new DataGridViewTextBoxColumn
@@ -80,7 +81,7 @@ namespace TrafficFines
                 dataGridViewCars.Columns.Add(new DataGridViewTextBoxColumn
                 {
                     HeaderText = "LicensePlate",
-                    DataPropertyName = "License Plate",
+                    DataPropertyName = "LicensePlate",
                     DisplayIndex = 3
                 });
                 dataGridViewCars.Columns.Add(new DataGridViewTextBoxColumn
@@ -140,7 +141,44 @@ namespace TrafficFines
 
         private void button1_Click(object sender, EventArgs e)
         {
+            try
+            {
+                if (connection?.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
 
+                AddCarModels data = new AddCarModels
+                {
+                    Model = textBoxModel.Text,
+                    YearOfRelease = (int)YearOfRelease.Value,
+                    LicensePlate = textBoxLicansePlate.Text,
+                    InsurableValue = (decimal)InsurableValue.Value,
+                    OwnerFullName = textBoxOwnerFullName.Text,
+                    OwnerPassportData = textBoxOwnerPassportData.Text
+                };
+
+                string query = "INSERT INTO Cars (Model, YearOfRelease, LicensePlate, InsurableValue, OwnerFullName, OwnerPassportData)" +
+                    " VALUES(@Model,@YearOfRelease,@LicensePlate,@InsurableValue,@OwnerFullName,@OwnerPassportData)";
+                SqlCommand response = new(query, connection);
+                response.Parameters.AddWithValue("@Model", data.Model);
+                response.Parameters.AddWithValue("@YearOfRelease", data.YearOfRelease);
+                response.Parameters.AddWithValue("@InsurableValue", data.InsurableValue);
+                response.Parameters.AddWithValue("@LicensePlate", data.LicensePlate);
+                response.Parameters.AddWithValue("@OwnerFullName", data.OwnerFullName);
+                response.Parameters.AddWithValue("@OwnerPassportData", data.OwnerPassportData);
+                response.ExecuteNonQuery();
+                ShowAllCars();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                connection?.Close();
+            }
         }
     }
 }
