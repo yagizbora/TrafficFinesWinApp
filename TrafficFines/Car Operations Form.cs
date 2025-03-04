@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DotNetEnv;
@@ -14,9 +15,9 @@ using TrafficFines.Models;
 
 namespace TrafficFines
 {
-    public partial class Add_Car_Form : Form
+    public partial class Car_Operations_Form : Form
     {
-        public Add_Car_Form()
+        public Car_Operations_Form()
         {
             InitializeComponent();
         }
@@ -148,7 +149,7 @@ namespace TrafficFines
                     connection.Open();
                 }
 
-                AddCarModels data = new AddCarModels
+                AddCarModels data = new()
                 {
                     Model = textBoxModel.Text,
                     YearOfRelease = (int)YearOfRelease.Value,
@@ -167,7 +168,11 @@ namespace TrafficFines
                 response.Parameters.AddWithValue("@LicensePlate", data.LicensePlate);
                 response.Parameters.AddWithValue("@OwnerFullName", data.OwnerFullName);
                 response.Parameters.AddWithValue("@OwnerPassportData", data.OwnerPassportData);
-                response.ExecuteNonQuery();
+                int affectedRows = response.ExecuteNonQuery();
+                if (affectedRows > 0)
+                {
+                    MessageBox.Show("Car added!", "Completed!");
+                }
                 ShowAllCars();
 
             }
@@ -179,6 +184,29 @@ namespace TrafficFines
             {
                 connection?.Close();
             }
+        }
+
+        private void dataGridViewCars_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int chooseline = dataGridViewCars.SelectedCells[0].RowIndex;
+            EditDataCarModels data = new()
+            {
+                Carid = dataGridViewCars.Rows[chooseline].Cells[0].Value?.ToString(),
+                Model = dataGridViewCars.Rows[chooseline].Cells[1].Value?.ToString(),
+                YearOfRelease = (int?)dataGridViewCars.Rows[chooseline].Cells[2].Value,
+                LicensePlate = dataGridViewCars.Rows[chooseline].Cells[3].Value?.ToString(),
+                InsurableValue = (decimal?)dataGridViewCars.Rows[chooseline].Cells[4].Value,
+                OwnerFullName = dataGridViewCars.Rows[chooseline].Cells[5].Value?.ToString(),
+                OwnerPassportData = dataGridViewCars.Rows[chooseline].Cells[6].Value?.ToString()
+            };
+            CarIdLabel.Text = data.Carid;
+            textBoxEditModel.Text = data.Model;
+            EditYearOfRelease.Value = data.YearOfRelease.HasValue ? (decimal)data.YearOfRelease.Value : 0;
+            EditInsurableValue.Value = data.InsurableValue.HasValue ? (decimal)data.InsurableValue.Value : 0;
+            textBoxEditOwnerFullName.Text = data.OwnerFullName;
+            textBoxEditOwnerPassportData.Text = data.OwnerPassportData;
+            textBoxEditLicansePlate.Text = data.LicensePlate;
+
         }
     }
 }
