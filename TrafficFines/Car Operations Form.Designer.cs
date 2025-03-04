@@ -50,7 +50,6 @@
             label7 = new Label();
             EditInsurableValue = new NumericUpDown();
             textBoxEditOwnerPassportData = new TextBox();
-            button2 = new Button();
             textBoxEditModel = new TextBox();
             label8 = new Label();
             label9 = new Label();
@@ -59,6 +58,8 @@
             label11 = new Label();
             textBoxEditLicansePlate = new TextBox();
             label12 = new Label();
+            label14 = new Label();
+            button2 = new Button();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)YearOfRelease).BeginInit();
             ((System.ComponentModel.ISupportInitialize)InsurableValue).BeginInit();
@@ -212,17 +213,18 @@
             // 
             // groupBox2
             // 
+            groupBox2.Controls.Add(button2);
             groupBox2.Controls.Add(CarIdLabel);
             groupBox2.Controls.Add(label13);
             groupBox2.Controls.Add(EditYearOfRelease);
             groupBox2.Controls.Add(label7);
             groupBox2.Controls.Add(EditInsurableValue);
             groupBox2.Controls.Add(textBoxEditOwnerPassportData);
-            groupBox2.Controls.Add(button2);
             groupBox2.Controls.Add(textBoxEditModel);
             groupBox2.Controls.Add(label8);
             groupBox2.Controls.Add(label9);
             groupBox2.Controls.Add(textBoxEditOwnerFullName);
+            groupBox2.Controls.Add(label14);
             groupBox2.Controls.Add(label10);
             groupBox2.Controls.Add(label11);
             groupBox2.Controls.Add(textBoxEditLicansePlate);
@@ -254,7 +256,7 @@
             // 
             // EditYearOfRelease
             // 
-            EditYearOfRelease.Location = new Point(156, 82);
+            EditYearOfRelease.Location = new Point(151, 60);
             EditYearOfRelease.Maximum = new decimal(new int[] { 2025, 0, 0, 0 });
             EditYearOfRelease.Minimum = new decimal(new int[] { 1900, 0, 0, 0 });
             EditYearOfRelease.Name = "EditYearOfRelease";
@@ -265,7 +267,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(388, 65);
+            label7.Location = new Point(394, 41);
             label7.Name = "label7";
             label7.Size = new Size(86, 15);
             label7.TabIndex = 12;
@@ -273,30 +275,21 @@
             // 
             // EditInsurableValue
             // 
-            EditInsurableValue.Location = new Point(388, 83);
+            EditInsurableValue.Location = new Point(394, 61);
             EditInsurableValue.Name = "EditInsurableValue";
             EditInsurableValue.Size = new Size(120, 23);
             EditInsurableValue.TabIndex = 11;
             // 
             // textBoxEditOwnerPassportData
             // 
-            textBoxEditOwnerPassportData.Location = new Point(7, 135);
+            textBoxEditOwnerPassportData.Location = new Point(7, 112);
             textBoxEditOwnerPassportData.Name = "textBoxEditOwnerPassportData";
-            textBoxEditOwnerPassportData.Size = new Size(117, 23);
+            textBoxEditOwnerPassportData.Size = new Size(131, 23);
             textBoxEditOwnerPassportData.TabIndex = 9;
-            // 
-            // button2
-            // 
-            button2.Location = new Point(254, 135);
-            button2.Name = "button2";
-            button2.Size = new Size(117, 23);
-            button2.TabIndex = 10;
-            button2.Text = "Edit Car";
-            button2.UseVisualStyleBackColor = true;
             // 
             // textBoxEditModel
             // 
-            textBoxEditModel.Location = new Point(7, 82);
+            textBoxEditModel.Location = new Point(7, 59);
             textBoxEditModel.Name = "textBoxEditModel";
             textBoxEditModel.Size = new Size(131, 23);
             textBoxEditModel.TabIndex = 0;
@@ -304,7 +297,7 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(7, 64);
+            label8.Location = new Point(7, 41);
             label8.Name = "label8";
             label8.Size = new Size(41, 15);
             label8.TabIndex = 1;
@@ -313,7 +306,7 @@
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new Point(7, 117);
+            label9.Location = new Point(6, 94);
             label9.Name = "label9";
             label9.Size = new Size(117, 15);
             label9.TabIndex = 8;
@@ -321,15 +314,15 @@
             // 
             // textBoxEditOwnerFullName
             // 
-            textBoxEditOwnerFullName.Location = new Point(139, 135);
+            textBoxEditOwnerFullName.Location = new Point(151, 112);
             textBoxEditOwnerFullName.Name = "textBoxEditOwnerFullName";
-            textBoxEditOwnerFullName.Size = new Size(100, 23);
+            textBoxEditOwnerFullName.Size = new Size(113, 23);
             textBoxEditOwnerFullName.TabIndex = 7;
             // 
             // label10
             // 
             label10.AutoSize = true;
-            label10.Location = new Point(155, 65);
+            label10.Location = new Point(151, 41);
             label10.Name = "label10";
             label10.Size = new Size(87, 15);
             label10.TabIndex = 3;
@@ -338,7 +331,7 @@
             // label11
             // 
             label11.AutoSize = true;
-            label11.Location = new Point(139, 118);
+            label11.Location = new Point(151, 94);
             label11.Name = "label11";
             label11.Size = new Size(99, 15);
             label11.TabIndex = 6;
@@ -346,19 +339,38 @@
             // 
             // textBoxEditLicansePlate
             // 
-            textBoxEditLicansePlate.Location = new Point(271, 82);
+            textBoxEditLicansePlate.Location = new Point(271, 60);
             textBoxEditLicansePlate.Name = "textBoxEditLicansePlate";
-            textBoxEditLicansePlate.Size = new Size(100, 23);
+            textBoxEditLicansePlate.Size = new Size(117, 23);
             textBoxEditLicansePlate.TabIndex = 4;
             // 
             // label12
             // 
             label12.AutoSize = true;
-            label12.Location = new Point(271, 65);
+            label12.Location = new Point(271, 41);
             label12.Name = "label12";
             label12.Size = new Size(75, 15);
             label12.TabIndex = 5;
             label12.Text = "License Plate";
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Location = new Point(151, 42);
+            label14.Name = "label14";
+            label14.Size = new Size(87, 15);
+            label14.TabIndex = 3;
+            label14.Text = "Year Of Release";
+            // 
+            // button2
+            // 
+            button2.Location = new Point(289, 112);
+            button2.Name = "button2";
+            button2.Size = new Size(118, 23);
+            button2.TabIndex = 16;
+            button2.Text = "button2";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += this.button2_Click;
             // 
             // Car_Operations_Form
             // 
@@ -370,7 +382,7 @@
             Controls.Add(dataGridViewCars);
             Controls.Add(groupBox1);
             Name = "Car_Operations_Form";
-            Text = "Car Operations Form";
+            Text = "Add_Car_Form";
             Load += Add_Car_Form_Load;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
@@ -406,7 +418,6 @@
         private Label label7;
         private NumericUpDown EditInsurableValue;
         private TextBox textBoxEditOwnerPassportData;
-        private Button button2;
         private TextBox textBoxEditModel;
         private Label label8;
         private Label label9;
@@ -417,5 +428,7 @@
         private Label label12;
         private Label CarIdLabel;
         private Label label13;
+        private Label label14;
+        private Button button2;
     }
 }

@@ -13,7 +13,7 @@ namespace TrafficFines
         }
         SqlConnection? connection;
 
-        Add_Car_Form? addcarform;
+        Car_Operations_Form? addcarform;
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -39,7 +39,7 @@ namespace TrafficFines
 
         private void button1_Click(object sender, EventArgs e)
         {
-            addcarform = new Add_Car_Form();
+            addcarform = new Car_Operations_Form();
             addcarform.Show();
         }
     }

@@ -34,4 +34,14 @@ namespace TrafficFines.Models
         public string? OwnerFullName { get; set; }
         public string? OwnerPassportData { get; set; }
     }
+    class SendEditDataCarModels
+    {
+        public string? Carid { get; set; }
+        public string? Model { get; set; }
+        public int? YearOfRelease { get; set; }
+        public string? LicensePlate { get; set; }
+        public decimal? InsurableValue { get; set; }
+        public string? OwnerFullName { get; set; }
+        public string? OwnerPassportData { get; set; }
+    }
 }

@@ -151,12 +151,12 @@ namespace TrafficFines
 
                 AddCarModels data = new()
                 {
-                    Model = textBoxModel.Text,
+                    Model = textBoxModel.Text.Trim(),
                     YearOfRelease = (int)YearOfRelease.Value,
-                    LicensePlate = textBoxLicansePlate.Text,
+                    LicensePlate = textBoxLicansePlate.Text.Trim(),
                     InsurableValue = (decimal)InsurableValue.Value,
-                    OwnerFullName = textBoxOwnerFullName.Text,
-                    OwnerPassportData = textBoxOwnerPassportData.Text
+                    OwnerFullName = textBoxOwnerFullName.Text.Trim(),
+                    OwnerPassportData = textBoxOwnerPassportData.Text.Trim()
                 };
 
                 string query = "INSERT INTO Cars (Model, YearOfRelease, LicensePlate, InsurableValue, OwnerFullName, OwnerPassportData)" +
@@ -206,6 +206,68 @@ namespace TrafficFines
             textBoxEditOwnerFullName.Text = data.OwnerFullName;
             textBoxEditOwnerPassportData.Text = data.OwnerPassportData;
             textBoxEditLicansePlate.Text = data.LicensePlate;
+
+        }
+        private void button2_Click(object sender, EventArgs e)
+        {
+            SendEditDataCarModels data = new()
+            {
+                Carid = CarIdLabel.Text.Trim(),
+                Model = textBoxEditModel.Text.Trim(),
+                YearOfRelease = (int?)EditYearOfRelease.Value,
+                LicensePlate = textBoxEditLicansePlate.Text.Trim(),
+                InsurableValue = (int?)EditInsurableValue.Value,
+                OwnerFullName = textBoxEditOwnerFullName.Text.Trim(),
+                OwnerPassportData = textBoxEditOwnerPassportData.Text.Trim()
+            };
+
+            if (!int.TryParse(CarIdLabel.Text, out int carId))
+            {
+                MessageBox.Show("Hata: Geçersiz Car ID!");
+                return;
+            }
+
+            try
+            {
+                if (connection?.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+
+                string query = "UPDATE Cars SET Model = @Model, YearOfRelease = @YearOfRelease, LicensePlate = @LicensePlate," +
+                    " InsurableValue = @InsurableValue, OwnerFullName = @OwnerFullName, OwnerPassportData = @OwnerPassportData WHERE CarID = @id";
+
+                SqlCommand response = new(query, connection);
+                response.Parameters.AddWithValue("@id", carId);
+                response.Parameters.AddWithValue("@Model", data.Model);
+                response.Parameters.AddWithValue("@YearOfRelease", data.YearOfRelease ?? (object)DBNull.Value);
+                response.Parameters.AddWithValue("@LicensePlate", data.LicensePlate);
+                response.Parameters.AddWithValue("@OwnerFullName", data.OwnerFullName);
+                response.Parameters.AddWithValue("@OwnerPassportData", data.OwnerPassportData);
+                response.Parameters.AddWithValue("@InsurableValue", data.InsurableValue ?? (object)DBNull.Value);
+
+                int rowsAffected = response.ExecuteNonQuery(); 
+
+                if (rowsAffected > 0)
+                {
+                    MessageBox.Show($"This Car:({data.Model}) edited!", "Completed!");
+                    ShowAllCars();
+                }
+                else
+                {
+                    MessageBox.Show("Güncelleme başarısız, lütfen tekrar deneyin.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                connection?.Close();
+            }
+
 
         }
     }
