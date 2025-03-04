@@ -22,7 +22,6 @@ namespace TrafficFines
 
                 if (string.IsNullOrEmpty(connectionString))
                 {
-                    Console.WriteLine(connectionString);
                     MessageBox.Show("Bağlantı dizesi null veya boş. Lütfen .env dosyasını kontrol edin.");
                     return;
                 }
