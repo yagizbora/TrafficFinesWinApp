@@ -28,33 +28,46 @@
         /// </summary>
         private void InitializeComponent()
         {
-            dataGridView1 = new DataGridView();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            label1 = new Label();
+            button1 = new Button();
             SuspendLayout();
             // 
-            // dataGridView1
+            // label1
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(12, 318);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(1333, 173);
-            dataGridView1.TabIndex = 0;
+            label1.AutoSize = true;
+            label1.Location = new Point(12, 42);
+            label1.Name = "label1";
+            label1.Size = new Size(82, 15);
+            label1.TabIndex = 3;
+            label1.Text = "Add Car Panel";
+            // 
+            // button1
+            // 
+            button1.Location = new Point(12, 60);
+            button1.Name = "button1";
+            button1.Size = new Size(124, 23);
+            button1.TabIndex = 2;
+            button1.Text = "Add Car Form";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1357, 503);
-            Controls.Add(dataGridView1);
+            ClientSize = new Size(428, 443);
+            Controls.Add(label1);
+            Controls.Add(button1);
             Name = "Form1";
-            Text = "Form1";
+            Text = "Traffic Fines App Entry";
             Load += Form1_Load;
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
-        private DataGridView dataGridView1;
+        private Label label1;
+        private Button button1;
     }
 }

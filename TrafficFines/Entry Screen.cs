@@ -13,6 +13,8 @@ namespace TrafficFines
         }
         SqlConnection? connection;
 
+        Add_Car_Form? addcarform;
+
         private void Form1_Load(object sender, EventArgs e)
         {
             try
@@ -33,6 +35,12 @@ namespace TrafficFines
             {
                 MessageBox.Show("Hata: " + "\n" + (ex?.Message ?? "Bilinmeyen bir hata oluştu."));
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            addcarform = new Add_Car_Form();
+            addcarform.Show();
         }
     }
 }
