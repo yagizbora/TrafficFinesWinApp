@@ -246,7 +246,7 @@ namespace TrafficFines
                 response.Parameters.AddWithValue("@OwnerPassportData", data.OwnerPassportData);
                 response.Parameters.AddWithValue("@InsurableValue", data.InsurableValue ?? (object)DBNull.Value);
 
-                int rowsAffected = response.ExecuteNonQuery(); 
+                int rowsAffected = response.ExecuteNonQuery();
 
                 if (rowsAffected > 0)
                 {
@@ -269,6 +269,50 @@ namespace TrafficFines
             }
 
 
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            try
+            {
+
+                DeleteCarModels data = new()
+                {
+                    Carid = CarIdLabel.Text
+                };
+
+                if (data.Carid == "-" || string.IsNullOrEmpty(data.Carid))
+                {
+                    MessageBox.Show("Please choose car!", "Warning!");
+                    return;
+                }
+
+                if (connection?.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+
+
+                string query = "DELETE FROM Cars WHERE CarID = @id";
+                SqlCommand response = new(query, connection);
+                response.Parameters.AddWithValue("@id", data.Carid);
+                int affectedRows = response.ExecuteNonQuery();
+                if (affectedRows > 0)
+                {
+                    MessageBox.Show("Car Deleted!", "Succesfull!");
+                    ShowAllCars();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                connection?.Close();
+            }
         }
     }
 }

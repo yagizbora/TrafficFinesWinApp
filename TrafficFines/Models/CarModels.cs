@@ -44,4 +44,8 @@ namespace TrafficFines.Models
         public string? OwnerFullName { get; set; }
         public string? OwnerPassportData { get; set; }
     }
+    class DeleteCarModels
+    {
+        public string? Carid { get; set; }
+    }
 }

@@ -54,12 +54,13 @@
             label8 = new Label();
             label9 = new Label();
             textBoxEditOwnerFullName = new TextBox();
+            label14 = new Label();
             label10 = new Label();
             label11 = new Label();
             textBoxEditLicansePlate = new TextBox();
             label12 = new Label();
-            label14 = new Label();
-            button2 = new Button();
+            button3 = new Button();
+            button4 = new Button();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)YearOfRelease).BeginInit();
             ((System.ComponentModel.ISupportInitialize)InsurableValue).BeginInit();
@@ -213,7 +214,8 @@
             // 
             // groupBox2
             // 
-            groupBox2.Controls.Add(button2);
+            groupBox2.Controls.Add(button4);
+            groupBox2.Controls.Add(button3);
             groupBox2.Controls.Add(CarIdLabel);
             groupBox2.Controls.Add(label13);
             groupBox2.Controls.Add(EditYearOfRelease);
@@ -319,6 +321,15 @@
             textBoxEditOwnerFullName.Size = new Size(113, 23);
             textBoxEditOwnerFullName.TabIndex = 7;
             // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Location = new Point(151, 42);
+            label14.Name = "label14";
+            label14.Size = new Size(87, 15);
+            label14.TabIndex = 3;
+            label14.Text = "Year Of Release";
+            // 
             // label10
             // 
             label10.AutoSize = true;
@@ -353,24 +364,25 @@
             label12.TabIndex = 5;
             label12.Text = "License Plate";
             // 
-            // label14
+            // button3
             // 
-            label14.AutoSize = true;
-            label14.Location = new Point(151, 42);
-            label14.Name = "label14";
-            label14.Size = new Size(87, 15);
-            label14.TabIndex = 3;
-            label14.Text = "Year Of Release";
+            button3.Location = new Point(271, 111);
+            button3.Name = "button3";
+            button3.Size = new Size(77, 23);
+            button3.TabIndex = 16;
+            button3.Text = "Edit Car";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button2_Click;
             // 
-            // button2
+            // button4
             // 
-            button2.Location = new Point(289, 112);
-            button2.Name = "button2";
-            button2.Size = new Size(118, 23);
-            button2.TabIndex = 16;
-            button2.Text = "button2";
-            button2.UseVisualStyleBackColor = true;
-            button2.Click += this.button2_Click;
+            button4.Location = new Point(354, 111);
+            button4.Name = "button4";
+            button4.Size = new Size(77, 23);
+            button4.TabIndex = 17;
+            button4.Text = "Delete Car";
+            button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
             // 
             // Car_Operations_Form
             // 
@@ -429,6 +441,7 @@
         private Label CarIdLabel;
         private Label label13;
         private Label label14;
-        private Button button2;
+        private Button button4;
+        private Button button3;
     }
 }
