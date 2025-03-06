@@ -39,6 +39,7 @@
             textBoxOwnerPassportData = new TextBox();
             button1 = new Button();
             groupBox1 = new GroupBox();
+            buttonclearadddatas = new Button();
             YearOfRelease = new NumericUpDown();
             label6 = new Label();
             InsurableValue = new NumericUpDown();
@@ -61,7 +62,6 @@
             label11 = new Label();
             textBoxEditLicansePlate = new TextBox();
             label12 = new Label();
-            buttonclearadddatas = new Button();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)YearOfRelease).BeginInit();
             ((System.ComponentModel.ISupportInitialize)InsurableValue).BeginInit();
@@ -100,7 +100,7 @@
             // 
             textBoxLicansePlate.Location = new Point(258, 40);
             textBoxLicansePlate.Name = "textBoxLicansePlate";
-            textBoxLicansePlate.Size = new Size(100, 23);
+            textBoxLicansePlate.Size = new Size(111, 23);
             textBoxLicansePlate.TabIndex = 4;
             // 
             // label3
@@ -123,9 +123,10 @@
             // 
             // textBoxOwnerFullName
             // 
-            textBoxOwnerFullName.Location = new Point(143, 95);
+            textBoxOwnerFullName.Location = new Point(143, 100);
+            textBoxOwnerFullName.Multiline = true;
             textBoxOwnerFullName.Name = "textBoxOwnerFullName";
-            textBoxOwnerFullName.Size = new Size(100, 23);
+            textBoxOwnerFullName.Size = new Size(111, 40);
             textBoxOwnerFullName.TabIndex = 7;
             // 
             // label5
@@ -139,16 +140,17 @@
             // 
             // textBoxOwnerPassportData
             // 
-            textBoxOwnerPassportData.Location = new Point(6, 95);
+            textBoxOwnerPassportData.Location = new Point(6, 100);
+            textBoxOwnerPassportData.Multiline = true;
             textBoxOwnerPassportData.Name = "textBoxOwnerPassportData";
-            textBoxOwnerPassportData.Size = new Size(117, 23);
+            textBoxOwnerPassportData.Size = new Size(131, 40);
             textBoxOwnerPassportData.TabIndex = 9;
             // 
             // button1
             // 
-            button1.Location = new Point(258, 95);
+            button1.Location = new Point(378, 70);
             button1.Name = "button1";
-            button1.Size = new Size(117, 23);
+            button1.Size = new Size(93, 23);
             button1.TabIndex = 10;
             button1.Text = "Add Car";
             button1.UseVisualStyleBackColor = true;
@@ -177,6 +179,16 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Add Car Panel";
             // 
+            // buttonclearadddatas
+            // 
+            buttonclearadddatas.Location = new Point(378, 99);
+            buttonclearadddatas.Name = "buttonclearadddatas";
+            buttonclearadddatas.Size = new Size(93, 23);
+            buttonclearadddatas.TabIndex = 14;
+            buttonclearadddatas.Text = "Temizle";
+            buttonclearadddatas.UseVisualStyleBackColor = true;
+            buttonclearadddatas.Click += buttonclearadddatas_Click;
+            // 
             // YearOfRelease
             // 
             YearOfRelease.Location = new Point(143, 40);
@@ -198,7 +210,7 @@
             // 
             // InsurableValue
             // 
-            InsurableValue.Location = new Point(375, 41);
+            InsurableValue.Location = new Point(375, 39);
             InsurableValue.Name = "InsurableValue";
             InsurableValue.Size = new Size(120, 23);
             InsurableValue.TabIndex = 11;
@@ -242,7 +254,7 @@
             // 
             // button4
             // 
-            button4.Location = new Point(354, 111);
+            button4.Location = new Point(403, 90);
             button4.Name = "button4";
             button4.Size = new Size(77, 23);
             button4.TabIndex = 17;
@@ -252,7 +264,7 @@
             // 
             // button3
             // 
-            button3.Location = new Point(271, 111);
+            button3.Location = new Point(403, 119);
             button3.Name = "button3";
             button3.Size = new Size(77, 23);
             button3.TabIndex = 16;
@@ -306,9 +318,10 @@
             // 
             // textBoxEditOwnerPassportData
             // 
-            textBoxEditOwnerPassportData.Location = new Point(7, 112);
+            textBoxEditOwnerPassportData.Location = new Point(7, 108);
+            textBoxEditOwnerPassportData.Multiline = true;
             textBoxEditOwnerPassportData.Name = "textBoxEditOwnerPassportData";
-            textBoxEditOwnerPassportData.Size = new Size(131, 23);
+            textBoxEditOwnerPassportData.Size = new Size(131, 40);
             textBoxEditOwnerPassportData.TabIndex = 9;
             // 
             // textBoxEditModel
@@ -330,7 +343,7 @@
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new Point(6, 94);
+            label9.Location = new Point(6, 90);
             label9.Name = "label9";
             label9.Size = new Size(117, 15);
             label9.TabIndex = 8;
@@ -338,9 +351,10 @@
             // 
             // textBoxEditOwnerFullName
             // 
-            textBoxEditOwnerFullName.Location = new Point(151, 112);
+            textBoxEditOwnerFullName.Location = new Point(151, 108);
+            textBoxEditOwnerFullName.Multiline = true;
             textBoxEditOwnerFullName.Name = "textBoxEditOwnerFullName";
-            textBoxEditOwnerFullName.Size = new Size(113, 23);
+            textBoxEditOwnerFullName.Size = new Size(117, 40);
             textBoxEditOwnerFullName.TabIndex = 7;
             // 
             // label14
@@ -364,7 +378,7 @@
             // label11
             // 
             label11.AutoSize = true;
-            label11.Location = new Point(151, 94);
+            label11.Location = new Point(151, 86);
             label11.Name = "label11";
             label11.Size = new Size(99, 15);
             label11.TabIndex = 6;
@@ -385,16 +399,6 @@
             label12.Size = new Size(75, 15);
             label12.TabIndex = 5;
             label12.Text = "License Plate";
-            // 
-            // buttonclearadddatas
-            // 
-            buttonclearadddatas.Location = new Point(386, 95);
-            buttonclearadddatas.Name = "buttonclearadddatas";
-            buttonclearadddatas.Size = new Size(93, 23);
-            buttonclearadddatas.TabIndex = 14;
-            buttonclearadddatas.Text = "Temizle";
-            buttonclearadddatas.UseVisualStyleBackColor = true;
-            buttonclearadddatas.Click += buttonclearadddatas_Click;
             // 
             // Car_Operations_Form
             // 
