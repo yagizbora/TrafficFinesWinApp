@@ -1,5 +1,4 @@
 ﻿using DotNetEnv;
-using System.Data;
 using Microsoft.Data.SqlClient;
 
 
@@ -15,6 +14,8 @@ namespace TrafficFines
 
         Car_Operations_Form? addcarform;
 
+        Violation_Operations_Form? violationform;
+
         private void Form1_Load(object sender, EventArgs e)
         {
             try
@@ -29,7 +30,7 @@ namespace TrafficFines
                 }
 
                 connection = new SqlConnection(connectionString);
-                Console.WriteLine(connectionString);
+                //Console.WriteLine(connectionString);
             }
             catch (Exception ex)
             {
@@ -41,6 +42,12 @@ namespace TrafficFines
         {
             addcarform = new Car_Operations_Form();
             addcarform.Show();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            violationform = new Violation_Operations_Form();
+            violationform.Show();
         }
     }
 }

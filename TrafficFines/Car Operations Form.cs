@@ -23,7 +23,6 @@ namespace TrafficFines
                 }
 
                 dataGridViewCars.DataSource = null;
-                dataGridViewCars.Columns.Clear();
 
                 string query = "SELECT CarID, Model, YearOfRelease, LicensePlate, InsurableValue, OwnerFullName, OwnerPassportData FROM CARS";
                 SqlCommand command = new(query, connection);
@@ -53,7 +52,7 @@ namespace TrafficFines
                 {
                     HeaderText = "Car ID",
                     DataPropertyName = "Carid",
-                    DisplayIndex = 0
+                        DisplayIndex = 0
                 });
                 dataGridViewCars.Columns.Add(new DataGridViewTextBoxColumn
                 {
@@ -183,9 +182,9 @@ namespace TrafficFines
             {
                 Carid = dataGridViewCars.Rows[chooseline].Cells[0].Value?.ToString(),
                 Model = dataGridViewCars.Rows[chooseline].Cells[1].Value?.ToString(),
-                YearOfRelease = (int?)dataGridViewCars.Rows[chooseline].Cells[2].Value,
+                YearOfRelease = (int?)dataGridViewCars.Rows[chooseline].Cells[2]?.Value,
                 LicensePlate = dataGridViewCars.Rows[chooseline].Cells[3].Value?.ToString(),
-                InsurableValue = (decimal?)dataGridViewCars.Rows[chooseline].Cells[4].Value,
+                InsurableValue = (decimal?)dataGridViewCars.Rows[chooseline].Cells[4]?.Value,
                 OwnerFullName = dataGridViewCars.Rows[chooseline].Cells[5].Value?.ToString(),
                 OwnerPassportData = dataGridViewCars.Rows[chooseline].Cells[6].Value?.ToString()
             };
@@ -319,6 +318,18 @@ namespace TrafficFines
             InsurableValue.Value = 0;
             textBoxOwnerFullName.Text = "";
             textBoxOwnerPassportData.Text = "";
+            ShowAllCars();
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            CarIdLabel.Text = "";
+            textBoxEditModel.Text = "";
+            EditYearOfRelease.Value = DateTime.Now.Year;
+            textBoxEditLicansePlate.Text = "";
+            EditInsurableValue.Value = 0;
+            textBoxEditOwnerFullName.Text = "";
+            textBoxEditOwnerPassportData.Text = "";
             ShowAllCars();
         }
     }

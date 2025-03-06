@@ -45,6 +45,7 @@
             InsurableValue = new NumericUpDown();
             dataGridViewCars = new DataGridView();
             groupBox2 = new GroupBox();
+            button2 = new Button();
             button4 = new Button();
             button3 = new Button();
             CarIdLabel = new Label();
@@ -148,7 +149,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(378, 70);
+            button1.Location = new Point(260, 90);
             button1.Name = "button1";
             button1.Size = new Size(93, 23);
             button1.TabIndex = 10;
@@ -181,7 +182,7 @@
             // 
             // buttonclearadddatas
             // 
-            buttonclearadddatas.Location = new Point(378, 99);
+            buttonclearadddatas.Location = new Point(260, 117);
             buttonclearadddatas.Name = "buttonclearadddatas";
             buttonclearadddatas.Size = new Size(93, 23);
             buttonclearadddatas.TabIndex = 14;
@@ -228,6 +229,7 @@
             // 
             // groupBox2
             // 
+            groupBox2.Controls.Add(button2);
             groupBox2.Controls.Add(button4);
             groupBox2.Controls.Add(button3);
             groupBox2.Controls.Add(CarIdLabel);
@@ -247,14 +249,24 @@
             groupBox2.Controls.Add(label12);
             groupBox2.Location = new Point(548, 12);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(588, 165);
+            groupBox2.Size = new Size(532, 165);
             groupBox2.TabIndex = 14;
             groupBox2.TabStop = false;
             groupBox2.Text = "Edit Car Panel";
             // 
+            // button2
+            // 
+            button2.Location = new Point(357, 125);
+            button2.Name = "button2";
+            button2.Size = new Size(75, 23);
+            button2.TabIndex = 18;
+            button2.Text = "Temizle";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click_1;
+            // 
             // button4
             // 
-            button4.Location = new Point(403, 90);
+            button4.Location = new Point(274, 125);
             button4.Name = "button4";
             button4.Size = new Size(77, 23);
             button4.TabIndex = 17;
@@ -264,7 +276,7 @@
             // 
             // button3
             // 
-            button3.Location = new Point(403, 119);
+            button3.Location = new Point(274, 100);
             button3.Name = "button3";
             button3.Size = new Size(77, 23);
             button3.TabIndex = 16;
@@ -410,7 +422,7 @@
             Controls.Add(dataGridViewCars);
             Controls.Add(groupBox1);
             Name = "Car_Operations_Form";
-            Text = "Add_Car_Form";
+            Text = "Add Car Form";
             Load += Add_Car_Form_Load;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
@@ -460,5 +472,6 @@
         private Button button4;
         private Button button3;
         private Button buttonclearadddatas;
+        private Button button2;
     }
 }
