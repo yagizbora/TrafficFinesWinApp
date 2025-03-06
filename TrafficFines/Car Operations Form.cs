@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using DotNetEnv;
+﻿using DotNetEnv;
 using Microsoft.Data.SqlClient;
-using Sprache;
+using System.Data;
 using TrafficFines.Models;
 
 namespace TrafficFines
@@ -291,18 +281,24 @@ namespace TrafficFines
                 {
                     connection.Open();
                 }
-
-
-                string query = "DELETE FROM Cars WHERE CarID = @id";
-                SqlCommand response = new(query, connection);
-                response.Parameters.AddWithValue("@id", data.Carid);
-                int affectedRows = response.ExecuteNonQuery();
-                if (affectedRows > 0)
+                DialogResult result = MessageBox.Show("Are you sure? Car will deleted", "Question!", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
                 {
-                    MessageBox.Show("Car Deleted!", "Succesfull!");
-                    ShowAllCars();
+                    string query = "DELETE FROM Cars WHERE CarID = @id";
+                    SqlCommand response = new(query, connection);
+                    response.Parameters.AddWithValue("@id", data.Carid);
+                    int affectedRows = response.ExecuteNonQuery();
+                    if (affectedRows > 0)
+                    {
+                        MessageBox.Show("Car Deleted!", "Succesfull!");
+                        ShowAllCars();
+                    }
+                    return;
                 }
-
+                else
+                {
+                    return;
+                }
             }
             catch (Exception ex)
             {
@@ -313,6 +309,17 @@ namespace TrafficFines
             {
                 connection?.Close();
             }
+        }
+
+        private void buttonclearadddatas_Click(object sender, EventArgs e)
+        {
+            textBoxModel.Text = "";
+            YearOfRelease.Value = DateTime.Now.Year;
+            textBoxLicansePlate.Text = "";
+            InsurableValue.Value = 0;
+            textBoxOwnerFullName.Text = "";
+            textBoxOwnerPassportData.Text = "";
+            ShowAllCars();
         }
     }
 }

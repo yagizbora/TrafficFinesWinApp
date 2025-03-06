@@ -44,6 +44,8 @@
             InsurableValue = new NumericUpDown();
             dataGridViewCars = new DataGridView();
             groupBox2 = new GroupBox();
+            button4 = new Button();
+            button3 = new Button();
             CarIdLabel = new Label();
             label13 = new Label();
             EditYearOfRelease = new NumericUpDown();
@@ -59,8 +61,7 @@
             label11 = new Label();
             textBoxEditLicansePlate = new TextBox();
             label12 = new Label();
-            button3 = new Button();
-            button4 = new Button();
+            buttonclearadddatas = new Button();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)YearOfRelease).BeginInit();
             ((System.ComponentModel.ISupportInitialize)InsurableValue).BeginInit();
@@ -155,6 +156,7 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(buttonclearadddatas);
             groupBox1.Controls.Add(YearOfRelease);
             groupBox1.Controls.Add(label6);
             groupBox1.Controls.Add(InsurableValue);
@@ -237,6 +239,26 @@
             groupBox2.TabIndex = 14;
             groupBox2.TabStop = false;
             groupBox2.Text = "Edit Car Panel";
+            // 
+            // button4
+            // 
+            button4.Location = new Point(354, 111);
+            button4.Name = "button4";
+            button4.Size = new Size(77, 23);
+            button4.TabIndex = 17;
+            button4.Text = "Delete Car";
+            button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
+            // 
+            // button3
+            // 
+            button3.Location = new Point(271, 111);
+            button3.Name = "button3";
+            button3.Size = new Size(77, 23);
+            button3.TabIndex = 16;
+            button3.Text = "Edit Car";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button2_Click;
             // 
             // CarIdLabel
             // 
@@ -364,25 +386,15 @@
             label12.TabIndex = 5;
             label12.Text = "License Plate";
             // 
-            // button3
+            // buttonclearadddatas
             // 
-            button3.Location = new Point(271, 111);
-            button3.Name = "button3";
-            button3.Size = new Size(77, 23);
-            button3.TabIndex = 16;
-            button3.Text = "Edit Car";
-            button3.UseVisualStyleBackColor = true;
-            button3.Click += button2_Click;
-            // 
-            // button4
-            // 
-            button4.Location = new Point(354, 111);
-            button4.Name = "button4";
-            button4.Size = new Size(77, 23);
-            button4.TabIndex = 17;
-            button4.Text = "Delete Car";
-            button4.UseVisualStyleBackColor = true;
-            button4.Click += button4_Click;
+            buttonclearadddatas.Location = new Point(386, 95);
+            buttonclearadddatas.Name = "buttonclearadddatas";
+            buttonclearadddatas.Size = new Size(93, 23);
+            buttonclearadddatas.TabIndex = 14;
+            buttonclearadddatas.Text = "Temizle";
+            buttonclearadddatas.UseVisualStyleBackColor = true;
+            buttonclearadddatas.Click += buttonclearadddatas_Click;
             // 
             // Car_Operations_Form
             // 
@@ -443,5 +455,6 @@
         private Label label14;
         private Button button4;
         private Button button3;
+        private Button buttonclearadddatas;
     }
 }
