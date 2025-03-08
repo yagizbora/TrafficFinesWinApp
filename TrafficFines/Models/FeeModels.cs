@@ -29,7 +29,6 @@ namespace TrafficFines.Models
     }
     class AddFeeModels
     {
-        public required int ViolationFactID { get; set; }
         public required int Carid { get; set; }
         public required int ViolationID { get; set; }
         public required DateTime ViolationDate { get; set; }

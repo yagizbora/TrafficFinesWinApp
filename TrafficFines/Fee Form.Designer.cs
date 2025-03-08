@@ -1,4 +1,6 @@
-﻿namespace TrafficFines
+﻿using System.Windows.Forms;
+
+namespace TrafficFines
 {
     partial class Fee
     {
@@ -102,9 +104,12 @@
             // 
             // ViolationDate
             // 
+            ViolationDate.CustomFormat = "dd/MM/yyyy HH:mm";
+            ViolationDate.ShowUpDown = true;
+            ViolationDate.Format = DateTimePickerFormat.Custom;
             ViolationDate.Location = new Point(12, 83);
             ViolationDate.Name = "ViolationDate";
-            ViolationDate.Size = new Size(121, 23);
+            ViolationDate.Size = new Size(139, 23);
             ViolationDate.TabIndex = 5;
             // 
             // label3
@@ -178,6 +183,7 @@
             button1.TabIndex = 10;
             button1.Text = "Ceza kes";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // Fee
             // 

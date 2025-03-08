@@ -230,17 +230,18 @@ namespace TrafficFines
         }
         private void CarComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-           if(radioButton2.Checked || radioButton1.Checked) 
-           {
+            richTextBoxDriverFullName.Text = "";
+            if (radioButton2.Checked || radioButton1.Checked)
+            {
                 radioButton1.Checked = false;
                 radioButton2.Checked = false;
                 if (richTextBoxDriverFullName.Enabled == true)
                 {
                     richTextBoxDriverFullName.Enabled = false;
                 }
-            
-           }
+            }
         }
+
         private void radiobutton_checkedchanged(object sender, EventArgs e)
         {
             RadioButton? rb = sender as RadioButton;
@@ -265,20 +266,25 @@ namespace TrafficFines
                     response.Parameters.AddWithValue("@id", carid);
                     object data = response.ExecuteScalar();
                     //Console.WriteLine(data);
-                    if(data != null)
+                    if (data != null)
                     {
-                        var result = new { OwnerFullName = data.ToString() };
+                        var result = new
+                        {
+                            OwnerFullName = data.ToString()
+                        };
                         string json = JsonSerializer.Serialize(result);
                         //Console.WriteLine(json);
                         richTextBoxDriverFullName.Text = result.OwnerFullName;
                     }
                     else
                     {
-                        //pass 
-
+                        if (richTextBoxDriverFullName.Enabled == true)
+                        {
+                            richTextBoxDriverFullName.Enabled = false;
+                        }
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
@@ -290,9 +296,68 @@ namespace TrafficFines
             else if (radioButton2.Checked)
             {
                 richTextBoxDriverFullName.Enabled = true;
+                richTextBoxDriverFullName.Text = "";
             }
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (connection == null || connection.State == ConnectionState.Closed)
+                {
+                    connection?.Open();
+                }
+                string ownerorproxycontrol = "";
+                if (radioButton1.Checked)
+                {
+                    ownerorproxycontrol = radioButton1.Text.Trim();
+                }
+                else if (radioButton2.Checked)
+                {
+                    ownerorproxycontrol = radioButton2.Text.Trim();
+                }
+                if (CarComboBox.SelectedValue == null || comboBoxViolations.SelectedValue == null || string.IsNullOrEmpty(richTextBoxDriverFullName.Text)
+                    || string.IsNullOrEmpty(ownerorproxycontrol))
+                {
+                    MessageBox.Show("All fields required", "Error!");
+                }
+                AddFeeModels data = new()
+                {
+                    Carid = (int)CarComboBox.SelectedValue,
+                    ViolationID = (int)comboBoxViolations.SelectedValue,
+                    DriverFullName = richTextBoxDriverFullName.Text.ToString(),
+                    ViolationDate = ViolationDate.Value,
+                    RightOfManagement = ownerorproxycontrol
+                };
 
+                string query = "INSERT INTO FACTS_OF_VIOLATIONS (CarID, ViolationID, ViolationDate, DriverFullName, RightOfManagement) " +
+                       "VALUES (@CarID, @ViolationID, @ViolationDate, @DriverFullName, @RightOfManagement)";
+                using SqlCommand response = new(query, connection);
+                response.Parameters.AddWithValue("@CarID",data.Carid);
+                response.Parameters.AddWithValue("@ViolationID", data.ViolationID);
+                response.Parameters.AddWithValue("@ViolationDate", data.ViolationDate);
+                response.Parameters.AddWithValue("@DriverFullName", data.DriverFullName);
+                response.Parameters.AddWithValue("@RightOfManagement", data.RightOfManagement);
+                int affectedRows = response.ExecuteNonQuery();
+
+                if(affectedRows > 0)
+                {
+                    MessageBox.Show("Fee is created!","Succesfull!");
+                    ShowViolations();
+                    LoadCars();
+                    LoadViolations();
+                    return;
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                connection?.Close();
+            }
+        }
     }
 }
