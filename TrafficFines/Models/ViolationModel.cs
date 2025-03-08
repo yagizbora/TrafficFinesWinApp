@@ -10,11 +10,41 @@ namespace TrafficFines.Models
     {
         public int? id { get; set; }
         public string? ViolationType { get; set; }
-        public string? FineAmount { get; set; }
+        public decimal? FineAmount { get; set; }
+
     }
     class AddViolationModel
     {
         public string? ViolationType { get; set; }
         public decimal? FineAmount { get; set; }
+    }
+    class GetViolationModel
+    {
+        public int? id { get; set; }
+        public string? ViolationType { get; set; }
+        public decimal? FineAmount { get; set; }
+    }
+    class EditViolationModel
+    {
+        public string? id { get; set; }
+        public string? ViolationType { get; set; }
+        public decimal? FineAmount { get; set; }
+    }
+    class DeleteViolationTypeModel
+    {
+        public required string Id { get; set; }
+    }
+    // FEE OPERATIONS
+
+    class FeeModels
+    {
+        public int? ViolationFactID { get; set; }
+        public string? LicensePlate { get; set; }
+        public string? OwnerFullName { get; set; }
+        public string? ViolationType { get; set; }
+        public decimal? FineAmount { get; set; }
+        public DateTime? ViolationDate { get; set; }
+        public string? DriverFullName { get; set; }
+        public string? RightOfManagement { get; set; }
     }
 }

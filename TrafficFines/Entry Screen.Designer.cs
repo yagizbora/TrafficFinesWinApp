@@ -32,12 +32,14 @@
             button1 = new Button();
             button2 = new Button();
             label2 = new Label();
+            label3 = new Label();
+            button3 = new Button();
             SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(12, 42);
+            label1.Location = new Point(22, 85);
             label1.Name = "label1";
             label1.Size = new Size(118, 15);
             label1.TabIndex = 3;
@@ -45,7 +47,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(12, 60);
+            button1.Location = new Point(22, 103);
             button1.Name = "button1";
             button1.Size = new Size(93, 23);
             button1.TabIndex = 2;
@@ -55,7 +57,7 @@
             // 
             // button2
             // 
-            button2.Location = new Point(225, 60);
+            button2.Location = new Point(162, 103);
             button2.Name = "button2";
             button2.Size = new Size(105, 23);
             button2.TabIndex = 4;
@@ -66,17 +68,38 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(225, 42);
+            label2.Location = new Point(162, 85);
             label2.Name = "label2";
             label2.Size = new Size(147, 15);
             label2.TabIndex = 5;
             label2.Text = "Violation Operations Panel";
             // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(119, 22);
+            label3.Name = "label3";
+            label3.Size = new Size(57, 15);
+            label3.TabIndex = 6;
+            label3.Text = "Violation ";
+            // 
+            // button3
+            // 
+            button3.Location = new Point(98, 40);
+            button3.Name = "button3";
+            button3.Size = new Size(93, 23);
+            button3.TabIndex = 7;
+            button3.Text = "Open Panel";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(428, 443);
+            ClientSize = new Size(321, 190);
+            Controls.Add(button3);
+            Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(button2);
             Controls.Add(label1);
@@ -94,5 +117,7 @@
         private Button button1;
         private Button button2;
         private Label label2;
+        private Label label3;
+        private Button button3;
     }
 }

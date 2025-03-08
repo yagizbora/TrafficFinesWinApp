@@ -16,6 +16,8 @@ namespace TrafficFines
 
         Violation_Operations_Form? violationform;
 
+        Violations? feeforms;
+
         private void Form1_Load(object sender, EventArgs e)
         {
             try
@@ -48,6 +50,12 @@ namespace TrafficFines
         {
             violationform = new Violation_Operations_Form();
             violationform.Show();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            feeforms = new Violations();
+            feeforms?.Show();
         }
     }
 }

@@ -23,6 +23,7 @@ namespace TrafficFines
                 }
 
                 dataGridViewCars.DataSource = null;
+                dataGridViewCars.Columns.Clear();
 
                 string query = "SELECT CarID, Model, YearOfRelease, LicensePlate, InsurableValue, OwnerFullName, OwnerPassportData FROM CARS";
                 SqlCommand command = new(query, connection);

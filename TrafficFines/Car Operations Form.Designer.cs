@@ -417,7 +417,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.RosyBrown;
-            ClientSize = new Size(1165, 348);
+            ClientSize = new Size(1165, 339);
             Controls.Add(groupBox2);
             Controls.Add(dataGridViewCars);
             Controls.Add(groupBox1);
