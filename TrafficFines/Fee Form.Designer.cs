@@ -45,8 +45,10 @@ namespace TrafficFines
             radioButton1 = new RadioButton();
             label4 = new Label();
             button1 = new Button();
+            groupBox2 = new GroupBox();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             groupBox1.SuspendLayout();
+            groupBox2.SuspendLayout();
             SuspendLayout();
             // 
             // dataGridView1
@@ -64,7 +66,7 @@ namespace TrafficFines
             // CarComboBox
             // 
             CarComboBox.FormattingEnabled = true;
-            CarComboBox.Location = new Point(12, 35);
+            CarComboBox.Location = new Point(13, 37);
             CarComboBox.Name = "CarComboBox";
             CarComboBox.Size = new Size(121, 23);
             CarComboBox.TabIndex = 1;
@@ -73,7 +75,7 @@ namespace TrafficFines
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(12, 17);
+            label1.Location = new Point(13, 19);
             label1.Name = "label1";
             label1.Size = new Size(30, 15);
             label1.TabIndex = 2;
@@ -88,7 +90,7 @@ namespace TrafficFines
             // comboBoxViolations
             // 
             comboBoxViolations.FormattingEnabled = true;
-            comboBoxViolations.Location = new Point(139, 35);
+            comboBoxViolations.Location = new Point(140, 37);
             comboBoxViolations.Name = "comboBoxViolations";
             comboBoxViolations.Size = new Size(121, 23);
             comboBoxViolations.TabIndex = 3;
@@ -96,7 +98,7 @@ namespace TrafficFines
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(139, 17);
+            label2.Location = new Point(140, 19);
             label2.Name = "label2";
             label2.Size = new Size(59, 15);
             label2.TabIndex = 4;
@@ -105,17 +107,17 @@ namespace TrafficFines
             // ViolationDate
             // 
             ViolationDate.CustomFormat = "dd/MM/yyyy HH:mm";
-            ViolationDate.ShowUpDown = true;
             ViolationDate.Format = DateTimePickerFormat.Custom;
-            ViolationDate.Location = new Point(12, 83);
+            ViolationDate.Location = new Point(13, 85);
             ViolationDate.Name = "ViolationDate";
+            ViolationDate.ShowUpDown = true;
             ViolationDate.Size = new Size(139, 23);
             ViolationDate.TabIndex = 5;
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(16, 63);
+            label3.Location = new Point(17, 65);
             label3.Name = "label3";
             label3.Size = new Size(81, 15);
             label3.TabIndex = 6;
@@ -124,7 +126,7 @@ namespace TrafficFines
             // richTextBoxDriverFullName
             // 
             richTextBoxDriverFullName.Enabled = false;
-            richTextBoxDriverFullName.Location = new Point(12, 127);
+            richTextBoxDriverFullName.Location = new Point(13, 129);
             richTextBoxDriverFullName.Name = "richTextBoxDriverFullName";
             richTextBoxDriverFullName.Size = new Size(248, 43);
             richTextBoxDriverFullName.TabIndex = 7;
@@ -134,7 +136,7 @@ namespace TrafficFines
             // 
             groupBox1.Controls.Add(radioButton2);
             groupBox1.Controls.Add(radioButton1);
-            groupBox1.Location = new Point(286, 35);
+            groupBox1.Location = new Point(287, 37);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(130, 109);
             groupBox1.TabIndex = 8;
@@ -169,7 +171,7 @@ namespace TrafficFines
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(12, 109);
+            label4.Location = new Point(13, 111);
             label4.Name = "label4";
             label4.Size = new Size(95, 15);
             label4.TabIndex = 9;
@@ -177,7 +179,7 @@ namespace TrafficFines
             // 
             // button1
             // 
-            button1.Location = new Point(12, 176);
+            button1.Location = new Point(13, 178);
             button1.Name = "button1";
             button1.Size = new Size(75, 23);
             button1.TabIndex = 10;
@@ -185,21 +187,31 @@ namespace TrafficFines
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
+            // groupBox2
+            // 
+            groupBox2.Controls.Add(richTextBoxDriverFullName);
+            groupBox2.Controls.Add(button1);
+            groupBox2.Controls.Add(CarComboBox);
+            groupBox2.Controls.Add(label4);
+            groupBox2.Controls.Add(label1);
+            groupBox2.Controls.Add(groupBox1);
+            groupBox2.Controls.Add(comboBoxViolations);
+            groupBox2.Controls.Add(label2);
+            groupBox2.Controls.Add(label3);
+            groupBox2.Controls.Add(ViolationDate);
+            groupBox2.Location = new Point(12, 12);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new Size(446, 270);
+            groupBox2.TabIndex = 11;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "Create Fee";
+            // 
             // Fee
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1193, 450);
-            Controls.Add(button1);
-            Controls.Add(label4);
-            Controls.Add(groupBox1);
-            Controls.Add(richTextBoxDriverFullName);
-            Controls.Add(label3);
-            Controls.Add(ViolationDate);
-            Controls.Add(label2);
-            Controls.Add(comboBoxViolations);
-            Controls.Add(label1);
-            Controls.Add(CarComboBox);
+            Controls.Add(groupBox2);
             Controls.Add(dataGridView1);
             Name = "Fee";
             Text = "Fee";
@@ -207,8 +219,9 @@ namespace TrafficFines
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
+            groupBox2.ResumeLayout(false);
+            groupBox2.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
@@ -227,5 +240,6 @@ namespace TrafficFines
         private RadioButton radioButton1;
         private Label label4;
         private Button button1;
+        private GroupBox groupBox2;
     }
 }
