@@ -150,6 +150,43 @@ namespace TrafficFines
                 connection?.Close();
             }
         }
+        private void LoadViolations()
+        {
+            try
+            {
+                if (connection == null || connection.State == ConnectionState.Closed)
+                {
+                    connection?.Open();
+                }
+
+                string query = "SELECT ViolationID, ViolationType FROM TYPES_OF_VIOLATIONS";
+                SqlCommand command = new(query, connection);
+                SqlDataReader reader = command.ExecuteReader();
+
+                List<ViolationComboBoxModels> data = new();
+                while (reader.Read())
+                {
+                    data.Add(new ViolationComboBoxModels
+                    {
+                        ViolationID = reader["ViolationID"] != DBNull.Value ? Convert.ToInt32(reader["ViolationID"]) : 0,
+                        ViolationType = reader["ViolationType"]?.ToString(),
+                    });
+                }
+                reader.Close();
+
+                comboBoxViolations.DataSource = data;
+                comboBoxViolations.DisplayMember = "ViolationType";
+                comboBoxViolations.ValueMember = "ViolationID";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+            finally
+            {
+                connection?.Close();
+            }
+        }
 
 
         private void Violations_Load(object sender, EventArgs e)
@@ -168,12 +205,14 @@ namespace TrafficFines
 
             ShowViolations();
             LoadCars();
+            LoadViolations();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
             ShowViolations();
             LoadCars();
+            LoadViolations();
         }
 
     }

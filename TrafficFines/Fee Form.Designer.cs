@@ -33,6 +33,8 @@
             CarComboBox = new ComboBox();
             label1 = new Label();
             timer1 = new System.Windows.Forms.Timer(components);
+            comboBoxViolations = new ComboBox();
+            label2 = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -71,11 +73,30 @@
             timer1.Interval = 180000;
             timer1.Tick += timer1_Tick;
             // 
+            // comboBoxViolations
+            // 
+            comboBoxViolations.FormattingEnabled = true;
+            comboBoxViolations.Location = new Point(139, 35);
+            comboBoxViolations.Name = "comboBoxViolations";
+            comboBoxViolations.Size = new Size(121, 23);
+            comboBoxViolations.TabIndex = 3;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(139, 17);
+            label2.Name = "label2";
+            label2.Size = new Size(59, 15);
+            label2.TabIndex = 4;
+            label2.Text = "Violations";
+            // 
             // Fee
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1193, 450);
+            Controls.Add(label2);
+            Controls.Add(comboBoxViolations);
             Controls.Add(label1);
             Controls.Add(CarComboBox);
             Controls.Add(dataGridView1);
@@ -93,5 +114,7 @@
         private ComboBox CarComboBox;
         private Label label1;
         private System.Windows.Forms.Timer timer1;
+        private ComboBox comboBoxViolations;
+        private Label label2;
     }
 }
