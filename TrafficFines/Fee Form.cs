@@ -1,11 +1,8 @@
 ﻿using System.Data;
-using System.Diagnostics;
-using System.Timers;
+using System.Text.Json;
 using DotNetEnv;
 using Microsoft.Data.SqlClient;
 using TrafficFines.Models;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
 
 
 namespace TrafficFines
@@ -30,7 +27,7 @@ namespace TrafficFines
                 SqlCommand command = new(query, connection);
                 SqlDataReader reader = command.ExecuteReader();
 
-               List <CarsComboBoxModels> data = new();
+                List<CarsComboBoxModels> data = new();
                 while (reader.Read())
                 {
                     data.Add(new CarsComboBoxModels
@@ -42,8 +39,8 @@ namespace TrafficFines
                 reader.Close();
 
                 CarComboBox.DataSource = data;
-                CarComboBox.DisplayMember = "LicensePlate"; 
-                CarComboBox.ValueMember = "Carid"; 
+                CarComboBox.DisplayMember = "LicensePlate";
+                CarComboBox.ValueMember = "Carid";
             }
             catch (Exception ex)
             {
@@ -219,6 +216,83 @@ namespace TrafficFines
             LoadCars();
             LoadViolations();
         }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+            if (radioButton1.Checked)
+            {
+
+            }
+            else if (radioButton2.Checked)
+            {
+
+            }
+        }
+        private void CarComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+           if(radioButton2.Checked || radioButton1.Checked) 
+           {
+                radioButton1.Checked = false;
+                radioButton2.Checked = false;
+                if (richTextBoxDriverFullName.Enabled == true)
+                {
+                    richTextBoxDriverFullName.Enabled = false;
+                }
+            
+           }
+        }
+        private void radiobutton_checkedchanged(object sender, EventArgs e)
+        {
+            RadioButton? rb = sender as RadioButton;
+            //if (rb != null && rb.Checked)
+            //{
+            //    MessageBox.Show("Seçilen: " + rb.Text);
+            //}
+            if (radioButton1.Checked)
+            {
+                try
+                {
+                    if (connection == null || connection.State == ConnectionState.Closed)
+                    {
+                        connection?.Open();
+                    }
+                    //richTextBoxDriverFullName
+                    //Console.WriteLine(carid);
+                    int? carid = (int?)CarComboBox.SelectedValue;
+
+                    string query = "SELECT OwnerFullName FROM CARS WHERE CarID = @id";
+                    SqlCommand response = new(query, connection);
+                    response.Parameters.AddWithValue("@id", carid);
+                    object data = response.ExecuteScalar();
+                    //Console.WriteLine(data);
+                    if(data != null)
+                    {
+                        var result = new { OwnerFullName = data.ToString() };
+                        string json = JsonSerializer.Serialize(result);
+                        //Console.WriteLine(json);
+                        richTextBoxDriverFullName.Text = result.OwnerFullName;
+                    }
+                    else
+                    {
+                        //pass 
+
+                    }
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                finally
+                {
+                    connection?.Close();
+                }
+            }
+            else if (radioButton2.Checked)
+            {
+                richTextBoxDriverFullName.Enabled = true;
+            }
+        }
+
 
     }
 }

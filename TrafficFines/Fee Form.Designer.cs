@@ -37,7 +37,7 @@
             label2 = new Label();
             ViolationDate = new DateTimePicker();
             label3 = new Label();
-            richTextBox1 = new RichTextBox();
+            richTextBoxDriverFullName = new RichTextBox();
             groupBox1 = new GroupBox();
             radioButton2 = new RadioButton();
             radioButton1 = new RadioButton();
@@ -66,6 +66,7 @@
             CarComboBox.Name = "CarComboBox";
             CarComboBox.Size = new Size(121, 23);
             CarComboBox.TabIndex = 1;
+            CarComboBox.SelectedIndexChanged += CarComboBox_SelectedIndexChanged;
             // 
             // label1
             // 
@@ -115,13 +116,14 @@
             label3.TabIndex = 6;
             label3.Text = "Violation Date";
             // 
-            // richTextBox1
+            // richTextBoxDriverFullName
             // 
-            richTextBox1.Location = new Point(12, 127);
-            richTextBox1.Name = "richTextBox1";
-            richTextBox1.Size = new Size(248, 43);
-            richTextBox1.TabIndex = 7;
-            richTextBox1.Text = "";
+            richTextBoxDriverFullName.Enabled = false;
+            richTextBoxDriverFullName.Location = new Point(12, 127);
+            richTextBoxDriverFullName.Name = "richTextBoxDriverFullName";
+            richTextBoxDriverFullName.Size = new Size(248, 43);
+            richTextBoxDriverFullName.TabIndex = 7;
+            richTextBoxDriverFullName.Text = "";
             // 
             // groupBox1
             // 
@@ -133,6 +135,7 @@
             groupBox1.TabIndex = 8;
             groupBox1.TabStop = false;
             groupBox1.Text = "Right Of Manager";
+            groupBox1.Enter += groupBox1_Enter;
             // 
             // radioButton2
             // 
@@ -144,6 +147,7 @@
             radioButton2.TabStop = true;
             radioButton2.Text = "Proxy";
             radioButton2.UseVisualStyleBackColor = true;
+            radioButton2.CheckedChanged += radiobutton_checkedchanged;
             // 
             // radioButton1
             // 
@@ -155,6 +159,7 @@
             radioButton1.TabStop = true;
             radioButton1.Text = "Owner";
             radioButton1.UseVisualStyleBackColor = true;
+            radioButton1.CheckedChanged += radiobutton_checkedchanged;
             // 
             // label4
             // 
@@ -182,7 +187,7 @@
             Controls.Add(button1);
             Controls.Add(label4);
             Controls.Add(groupBox1);
-            Controls.Add(richTextBox1);
+            Controls.Add(richTextBoxDriverFullName);
             Controls.Add(label3);
             Controls.Add(ViolationDate);
             Controls.Add(label2);
@@ -210,7 +215,7 @@
         private Label label2;
         private DateTimePicker ViolationDate;
         private Label label3;
-        private RichTextBox richTextBox1;
+        private RichTextBox richTextBoxDriverFullName;
         private GroupBox groupBox1;
         private RadioButton radioButton2;
         private RadioButton radioButton1;
