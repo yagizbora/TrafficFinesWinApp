@@ -1,6 +1,6 @@
 ﻿namespace TrafficFines
 {
-    partial class Violations
+    partial class Fee
     {
         /// <summary>
         /// Required designer variable.
@@ -71,7 +71,7 @@
             timer1.Interval = 180000;
             timer1.Tick += timer1_Tick;
             // 
-            // Violations
+            // Fee
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -79,8 +79,8 @@
             Controls.Add(label1);
             Controls.Add(CarComboBox);
             Controls.Add(dataGridView1);
-            Name = "Violations";
-            Text = "Violations";
+            Name = "Fee";
+            Text = "Fee";
             Load += Violations_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);

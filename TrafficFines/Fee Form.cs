@@ -9,9 +9,9 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
 
 namespace TrafficFines
 {
-    public partial class Violations : Form
+    public partial class Fee : Form
     {
-        public Violations()
+        public Fee()
         {
             InitializeComponent();
         }
