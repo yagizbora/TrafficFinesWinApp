@@ -4,6 +4,7 @@ using System.Timers;
 using DotNetEnv;
 using Microsoft.Data.SqlClient;
 using TrafficFines.Models;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
 
 
@@ -29,16 +30,20 @@ namespace TrafficFines
                 SqlCommand command = new(query, connection);
                 SqlDataReader reader = command.ExecuteReader();
 
-                Dictionary<int, string> cars = new();
+               List <CarsComboBoxModels> data = new();
                 while (reader.Read())
                 {
-                    cars[Convert.ToInt32(reader["CarID"])] = reader["LicensePlate"].ToString();
+                    data.Add(new CarsComboBoxModels
+                    {
+                        Carid = reader["CarID"] != DBNull.Value ? Convert.ToInt32(reader["CarID"]) : 0,
+                        LicensePlate = reader["LicensePlate"]?.ToString(),
+                    });
                 }
                 reader.Close();
 
-                CarComboBox.DataSource = new BindingSource(cars, null);
-                CarComboBox.DisplayMember = "Value"; 
-                CarComboBox.ValueMember = "Key"; 
+                CarComboBox.DataSource = data;
+                CarComboBox.DisplayMember = "LicensePlate"; 
+                CarComboBox.ValueMember = "Carid"; 
             }
             catch (Exception ex)
             {

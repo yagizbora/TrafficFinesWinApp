@@ -8,8 +8,13 @@ namespace TrafficFines.Models
 {
     class ViolationComboBoxModels
     {
-        public int? ViolationID { get; set; }
+        public int ViolationID { get; set; }
         public string? ViolationType { get; set; }
+    }
+    class CarsComboBoxModels
+    {
+        public int Carid { get; set; }
+        public string? LicensePlate { get; set; }
     }
     class FeeModels
     {
@@ -21,5 +26,15 @@ namespace TrafficFines.Models
         public DateTime? ViolationDate { get; set; }
         public string? DriverFullName { get; set; }
         public string? RightOfManagement { get; set; }
+    }
+    class AddFeeModels
+    {
+        public required int ViolationFactID { get; set; }
+        public required int Carid { get; set; }
+        public required int ViolationID { get; set; }
+        public required DateTime ViolationDate { get; set; }
+        public required string DriverFullName { get; set; }
+        public required string RightOfManagement { get; set; }
+
     }
 }

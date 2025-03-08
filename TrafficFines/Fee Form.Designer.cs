@@ -35,7 +35,16 @@
             timer1 = new System.Windows.Forms.Timer(components);
             comboBoxViolations = new ComboBox();
             label2 = new Label();
+            ViolationDate = new DateTimePicker();
+            label3 = new Label();
+            richTextBox1 = new RichTextBox();
+            groupBox1 = new GroupBox();
+            radioButton2 = new RadioButton();
+            radioButton1 = new RadioButton();
+            label4 = new Label();
+            button1 = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // dataGridView1
@@ -90,11 +99,92 @@
             label2.TabIndex = 4;
             label2.Text = "Violations";
             // 
+            // ViolationDate
+            // 
+            ViolationDate.Location = new Point(12, 83);
+            ViolationDate.Name = "ViolationDate";
+            ViolationDate.Size = new Size(121, 23);
+            ViolationDate.TabIndex = 5;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(16, 63);
+            label3.Name = "label3";
+            label3.Size = new Size(81, 15);
+            label3.TabIndex = 6;
+            label3.Text = "Violation Date";
+            // 
+            // richTextBox1
+            // 
+            richTextBox1.Location = new Point(12, 127);
+            richTextBox1.Name = "richTextBox1";
+            richTextBox1.Size = new Size(248, 43);
+            richTextBox1.TabIndex = 7;
+            richTextBox1.Text = "";
+            // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(radioButton2);
+            groupBox1.Controls.Add(radioButton1);
+            groupBox1.Location = new Point(286, 35);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(130, 109);
+            groupBox1.TabIndex = 8;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Right Of Manager";
+            // 
+            // radioButton2
+            // 
+            radioButton2.AutoSize = true;
+            radioButton2.Location = new Point(6, 52);
+            radioButton2.Name = "radioButton2";
+            radioButton2.Size = new Size(54, 19);
+            radioButton2.TabIndex = 1;
+            radioButton2.TabStop = true;
+            radioButton2.Text = "Proxy";
+            radioButton2.UseVisualStyleBackColor = true;
+            // 
+            // radioButton1
+            // 
+            radioButton1.AutoSize = true;
+            radioButton1.Location = new Point(6, 22);
+            radioButton1.Name = "radioButton1";
+            radioButton1.Size = new Size(60, 19);
+            radioButton1.TabIndex = 0;
+            radioButton1.TabStop = true;
+            radioButton1.Text = "Owner";
+            radioButton1.UseVisualStyleBackColor = true;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(12, 109);
+            label4.Name = "label4";
+            label4.Size = new Size(95, 15);
+            label4.TabIndex = 9;
+            label4.Text = "Driver Full Name";
+            // 
+            // button1
+            // 
+            button1.Location = new Point(12, 176);
+            button1.Name = "button1";
+            button1.Size = new Size(75, 23);
+            button1.TabIndex = 10;
+            button1.Text = "Ceza kes";
+            button1.UseVisualStyleBackColor = true;
+            // 
             // Fee
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1193, 450);
+            Controls.Add(button1);
+            Controls.Add(label4);
+            Controls.Add(groupBox1);
+            Controls.Add(richTextBox1);
+            Controls.Add(label3);
+            Controls.Add(ViolationDate);
             Controls.Add(label2);
             Controls.Add(comboBoxViolations);
             Controls.Add(label1);
@@ -104,6 +194,8 @@
             Text = "Fee";
             Load += Violations_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -116,5 +208,13 @@
         private System.Windows.Forms.Timer timer1;
         private ComboBox comboBoxViolations;
         private Label label2;
+        private DateTimePicker ViolationDate;
+        private Label label3;
+        private RichTextBox richTextBox1;
+        private GroupBox groupBox1;
+        private RadioButton radioButton2;
+        private RadioButton radioButton1;
+        private Label label4;
+        private Button button1;
     }
 }
