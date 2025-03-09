@@ -251,6 +251,10 @@ namespace TrafficFines
             //}
             if (radioButton1.Checked)
             {
+                if(richTextBoxDriverFullName.Enabled == true)
+                {
+                richTextBoxDriverFullName.Enabled = false;
+                }
                 try
                 {
                     if (connection == null || connection.State == ConnectionState.Closed)
@@ -321,6 +325,7 @@ namespace TrafficFines
                     || string.IsNullOrEmpty(ownerorproxycontrol))
                 {
                     MessageBox.Show("All fields required", "Error!");
+                    return;
                 }
                 AddFeeModels data = new()
                 {
