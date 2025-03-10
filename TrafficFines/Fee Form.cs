@@ -1,7 +1,7 @@
-﻿using System.Data;
-using System.Text.Json;
-using DotNetEnv;
+﻿using DotNetEnv;
 using Microsoft.Data.SqlClient;
+using System.Data;
+using System.Text.Json;
 using TrafficFines.Models;
 
 
@@ -14,7 +14,7 @@ namespace TrafficFines
             InitializeComponent();
         }
         SqlConnection? connection;
-        private void LoadCars()
+        public void LoadCars()
         {
             try
             {
@@ -62,7 +62,7 @@ namespace TrafficFines
                 }
 
                 string query = "SELECT F.ViolationFactID, C.LicensePlate, C.OwnerFullName, " +
-                               "T.ViolationType, T.FineAmount, F.ViolationDate, " +
+                               "T.ViolationType, F.FineAmount, F.ViolationDate, " +
                                "F.DriverFullName, F.RightOfManagement " +
                                "FROM FACTS_OF_VIOLATIONS F " +
                                "JOIN CARS C ON F.CarID = C.CarID " +
@@ -251,9 +251,9 @@ namespace TrafficFines
             //}
             if (radioButton1.Checked)
             {
-                if(richTextBoxDriverFullName.Enabled == true)
+                if (richTextBoxDriverFullName.Enabled == true)
                 {
-                richTextBoxDriverFullName.Enabled = false;
+                    richTextBoxDriverFullName.Enabled = false;
                 }
                 try
                 {
@@ -327,35 +327,61 @@ namespace TrafficFines
                     MessageBox.Show("All fields required", "Error!");
                     return;
                 }
-                AddFeeModels data = new()
-                {
-                    Carid = (int)CarComboBox.SelectedValue,
-                    ViolationID = (int)comboBoxViolations.SelectedValue,
-                    DriverFullName = richTextBoxDriverFullName.Text.ToString(),
-                    ViolationDate = ViolationDate.Value,
-                    RightOfManagement = ownerorproxycontrol
-                };
 
-                string query = "INSERT INTO FACTS_OF_VIOLATIONS (CarID, ViolationID, ViolationDate, DriverFullName, RightOfManagement) " +
-                       "VALUES (@CarID, @ViolationID, @ViolationDate, @DriverFullName, @RightOfManagement)";
-                using SqlCommand response = new(query, connection);
-                response.Parameters.AddWithValue("@CarID",data.Carid);
+
+                decimal? fetchfineamount = 0;
+                string fetchfeequery = "SELECT FineAmount AS FineAmount FROM TYPES_OF_VIOLATIONS WHERE ViolationID = @id";
+                SqlCommand command = new(fetchfeequery, connection);
+                command.Parameters.AddWithValue("@id", comboBoxViolations.SelectedValue);
+                object resultfineamonut = command.ExecuteScalar();
+
+                if (resultfineamonut != null)
+                {
+                    if(resultfineamonut == DBNull.Value)
+                    {
+                        MessageBox.Show("Something wrong happen try again","Error!",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                        return;
+                    }
+                    var result = new
+                    {
+                        fineamount = (decimal)resultfineamonut
+                    };
+                    string json = JsonSerializer.Serialize(result);
+                    fetchfineamount = (decimal)result.fineamount;
+                }
+                
+
+
+                    AddFeeModels data = new()
+                    {
+                        Carid = (int)CarComboBox.SelectedValue,
+                        ViolationID = (int)comboBoxViolations.SelectedValue,
+                        DriverFullName = richTextBoxDriverFullName.Text.ToString(),
+                        ViolationDate = ViolationDate.Value,
+                        RightOfManagement = ownerorproxycontrol,
+                        FineAmount = (decimal)fetchfineamount
+                    };
+                string query = "INSERT INTO FACTS_OF_VIOLATIONS (CarID, ViolationID, ViolationDate, DriverFullName, RightOfManagement,FineAmount) " +
+                       "VALUES (@CarID, @ViolationID, @ViolationDate, @DriverFullName, @RightOfManagement,@FineAmount)";
+                SqlCommand response = new(query, connection);
+                response.Parameters.AddWithValue("@CarID", data.Carid);
                 response.Parameters.AddWithValue("@ViolationID", data.ViolationID);
                 response.Parameters.AddWithValue("@ViolationDate", data.ViolationDate);
                 response.Parameters.AddWithValue("@DriverFullName", data.DriverFullName);
                 response.Parameters.AddWithValue("@RightOfManagement", data.RightOfManagement);
+                response.Parameters.AddWithValue("@FineAmount", data.FineAmount);
                 int affectedRows = response.ExecuteNonQuery();
 
-                if(affectedRows > 0)
+                if (affectedRows > 0)
                 {
-                    MessageBox.Show("Fee is created!","Succesfull!");
+                    MessageBox.Show("Fee is created!", "Succesfull!");
                     ShowViolations();
                     LoadCars();
                     LoadViolations();
                     return;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
