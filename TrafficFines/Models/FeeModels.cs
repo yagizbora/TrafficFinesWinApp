@@ -26,6 +26,7 @@ namespace TrafficFines.Models
         public DateTime? ViolationDate { get; set; }
         public string? DriverFullName { get; set; }
         public string? RightOfManagement { get; set; }
+        public bool? is_paid { get; set; }
     }
     class AddFeeModels
     {

@@ -62,9 +62,9 @@ namespace TrafficFines
                 }
 
                 string query = "SELECT F.ViolationFactID, C.LicensePlate, C.OwnerFullName, " +
-                               "T.ViolationType, F.FineAmount, F.ViolationDate, " +
+                               "T.ViolationType, F.FineAmount, F.ViolationDate,f.is_paid, " +
                                "F.DriverFullName, F.RightOfManagement " +
-                               "FROM FACTS_OF_VIOLATIONS F " +
+                               "FROM FACTS_OF_VIOLATIONS F " +  
                                "JOIN CARS C ON F.CarID = C.CarID " +
                                "JOIN TYPES_OF_VIOLATIONS T ON F.ViolationID = T.ViolationID " +
                                "ORDER BY F.ViolationDate DESC;";
@@ -76,6 +76,8 @@ namespace TrafficFines
 
                 while (reader.Read())
                 {
+                    int isPaidIndex = reader.GetOrdinal("is_paid");
+
                     violations.Add(new FeeModels
                     {
                         ViolationFactID = reader["ViolationFactID"] != DBNull.Value ? Convert.ToInt32(reader["ViolationFactID"]) : (int?)null,
@@ -85,9 +87,11 @@ namespace TrafficFines
                         FineAmount = reader["FineAmount"] != DBNull.Value ? Convert.ToDecimal(reader["FineAmount"]) : (decimal?)null,
                         ViolationDate = reader["ViolationDate"] != DBNull.Value ? Convert.ToDateTime(reader["ViolationDate"]) : (DateTime?)null,
                         DriverFullName = reader["DriverFullName"]?.ToString(),
-                        RightOfManagement = reader["RightOfManagement"]?.ToString()
+                        RightOfManagement = reader["RightOfManagement"]?.ToString(),
+                        is_paid = !reader.IsDBNull(isPaidIndex) ? (bool?)Convert.ToBoolean(reader["is_paid"]) : null 
                     });
                 }
+
 
                 reader.Close();
                 dataGridView1.AutoGenerateColumns = false;
@@ -141,6 +145,12 @@ namespace TrafficFines
                     HeaderText = "Right of Management",
                     DataPropertyName = "RightOfManagement",
                     DisplayIndex = 7
+                });
+                dataGridView1.Columns.Add(new DataGridViewCheckBoxColumn
+                {
+                    HeaderText = "Is paid?",
+                    DataPropertyName = "is_paid",
+                    DisplayIndex = 8
                 });
             }
             catch (Exception ex)
@@ -361,8 +371,8 @@ namespace TrafficFines
                         RightOfManagement = ownerorproxycontrol,
                         FineAmount = (decimal)fetchfineamount
                     };
-                string query = "INSERT INTO FACTS_OF_VIOLATIONS (CarID, ViolationID, ViolationDate, DriverFullName, RightOfManagement,FineAmount) " +
-                       "VALUES (@CarID, @ViolationID, @ViolationDate, @DriverFullName, @RightOfManagement,@FineAmount)";
+                string query = "INSERT INTO FACTS_OF_VIOLATIONS (CarID, ViolationID, ViolationDate, DriverFullName, RightOfManagement,FineAmount,is_paid) " +
+                       "VALUES (@CarID, @ViolationID, @ViolationDate, @DriverFullName, @RightOfManagement,@FineAmount,@is_paid)";
                 SqlCommand response = new(query, connection);
                 response.Parameters.AddWithValue("@CarID", data.Carid);
                 response.Parameters.AddWithValue("@ViolationID", data.ViolationID);
@@ -370,6 +380,7 @@ namespace TrafficFines
                 response.Parameters.AddWithValue("@DriverFullName", data.DriverFullName);
                 response.Parameters.AddWithValue("@RightOfManagement", data.RightOfManagement);
                 response.Parameters.AddWithValue("@FineAmount", data.FineAmount);
+                response.Parameters.AddWithValue("@is_paid", false);
                 int affectedRows = response.ExecuteNonQuery();
 
                 if (affectedRows > 0)

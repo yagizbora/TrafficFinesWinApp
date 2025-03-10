@@ -57,10 +57,10 @@ namespace TrafficFines
             dataGridView1.AllowUserToDeleteRows = false;
             dataGridView1.AllowUserToOrderColumns = true;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(12, 288);
+            dataGridView1.Location = new Point(12, 229);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
-            dataGridView1.Size = new Size(1169, 150);
+            dataGridView1.Size = new Size(438, 150);
             dataGridView1.TabIndex = 0;
             // 
             // CarComboBox
@@ -201,7 +201,7 @@ namespace TrafficFines
             groupBox2.Controls.Add(ViolationDate);
             groupBox2.Location = new Point(12, 12);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(446, 270);
+            groupBox2.Size = new Size(438, 211);
             groupBox2.TabIndex = 11;
             groupBox2.TabStop = false;
             groupBox2.Text = "Create Fee";
@@ -210,7 +210,7 @@ namespace TrafficFines
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1193, 450);
+            ClientSize = new Size(456, 387);
             Controls.Add(groupBox2);
             Controls.Add(dataGridView1);
             Name = "Fee";
