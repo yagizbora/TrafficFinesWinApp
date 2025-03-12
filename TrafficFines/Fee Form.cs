@@ -1,8 +1,11 @@
 ﻿using DotNetEnv;
 using Microsoft.Data.SqlClient;
+using Sprache;
 using System.Data;
 using System.Text.Json;
+using System.Windows.Forms;
 using TrafficFines.Models;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 
 namespace TrafficFines
@@ -64,7 +67,7 @@ namespace TrafficFines
                 string query = "SELECT F.ViolationFactID, C.LicensePlate, C.OwnerFullName, " +
                                "T.ViolationType, F.FineAmount, F.ViolationDate,f.is_paid, " +
                                "F.DriverFullName, F.RightOfManagement " +
-                               "FROM FACTS_OF_VIOLATIONS F " +  
+                               "FROM FACTS_OF_VIOLATIONS F " +
                                "JOIN CARS C ON F.CarID = C.CarID " +
                                "JOIN TYPES_OF_VIOLATIONS T ON F.ViolationID = T.ViolationID " +
                                "ORDER BY F.ViolationDate DESC;";
@@ -88,7 +91,7 @@ namespace TrafficFines
                         ViolationDate = reader["ViolationDate"] != DBNull.Value ? Convert.ToDateTime(reader["ViolationDate"]) : (DateTime?)null,
                         DriverFullName = reader["DriverFullName"]?.ToString(),
                         RightOfManagement = reader["RightOfManagement"]?.ToString(),
-                        is_paid = !reader.IsDBNull(isPaidIndex) ? (bool?)Convert.ToBoolean(reader["is_paid"]) : null 
+                        is_paid = !reader.IsDBNull(isPaidIndex) ? (bool?)Convert.ToBoolean(reader["is_paid"]) : null
                     });
                 }
 
@@ -180,7 +183,7 @@ namespace TrafficFines
                 {
                     data.Add(new ViolationComboBoxModels
                     {
-                        ViolationID = reader["ViolationID"] != DBNull.Value ? Convert.ToInt32(reader["ViolationID"]) : 0,
+                        ViolationID = reader["ViolationID"] != DBNull.Value ? Convert.ToInt32(reader["ViolationID"]) : (int?)null,
                         ViolationType = reader["ViolationType"]?.ToString(),
                     });
                 }
@@ -192,13 +195,85 @@ namespace TrafficFines
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error: " + ex.Message);
+                MessageBox.Show("Error" + ex.Message);
+                Console.WriteLine(ex.Message);
             }
             finally
             {
                 connection?.Close();
             }
         }
+
+        public void EditLoadCarsAndViolations(int carId, int violationId)
+        {
+            try
+            {
+                if (connection == null || connection.State == ConnectionState.Closed)
+                {
+                    connection?.Open();
+                }
+
+                // İlk önce Cars verilerini alıyoruz
+                string carQuery = "SELECT CarID, LicensePlate FROM CARS";
+                using (SqlCommand carResponse = new(carQuery, connection))
+                {
+                    using (SqlDataReader carReader = carResponse.ExecuteReader())
+                    {
+                        List<EditCarsComboBoxModels> carData = new();
+
+                        while (carReader.Read())
+                        {
+                            carData.Add(new EditCarsComboBoxModels
+                            {
+                                Carid = carReader["CarID"] != DBNull.Value ? Convert.ToInt32(carReader["CarID"]) : 0,
+                                LicensePlate = carReader["LicensePlate"]?.ToString(),
+                            });
+                        }
+
+                        // Cars verilerini comboBox'a yükleme
+                        CarEditComboBox.DataSource = carData;
+                        CarEditComboBox.DisplayMember = "LicensePlate";  // LicensePlate'yi gösterebiliriz
+                        CarEditComboBox.ValueMember = "CarID";
+                        CarEditComboBox.SelectedValue = carId;
+                    }
+                }
+
+                // Cars verileri tamamlandıktan sonra Violations verilerini alıyoruz
+                string violationQuery = "SELECT ViolationID, ViolationType FROM TYPES_OF_VIOLATIONS";
+                using (SqlCommand violationResponse = new(violationQuery, connection))
+                {
+                    using (SqlDataReader violationReader = violationResponse.ExecuteReader())
+                    {
+                        List<EditViolationComboBoxModels> violationData = new();
+
+                        while (violationReader.Read())
+                        {
+                            violationData.Add(new EditViolationComboBoxModels
+                            {
+                                ViolationID = violationReader["ViolationID"] != DBNull.Value ? Convert.ToInt32(violationReader["ViolationID"]) : (int?)null,
+                                ViolationType = violationReader["ViolationType"]?.ToString(),
+                            });
+                        }
+
+                        // Violations verilerini comboBox'a yükleme
+                        comboBoxEditViolations.DataSource = violationData;
+                        comboBoxEditViolations.DisplayMember = "ViolationType";
+                        comboBoxEditViolations.ValueMember = "ViolationID";
+                        comboBoxEditViolations.SelectedValue = violationId;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                connection?.Close();
+            }
+        }
+
 
 
         private void Violations_Load(object sender, EventArgs e)
@@ -347,9 +422,9 @@ namespace TrafficFines
 
                 if (resultfineamonut != null)
                 {
-                    if(resultfineamonut == DBNull.Value)
+                    if (resultfineamonut == DBNull.Value)
                     {
-                        MessageBox.Show("Something wrong happen try again","Error!",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                        MessageBox.Show("Something wrong happen try again", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                     var result = new
@@ -359,18 +434,18 @@ namespace TrafficFines
                     string json = JsonSerializer.Serialize(result);
                     fetchfineamount = (decimal)result.fineamount;
                 }
-                
 
 
-                    AddFeeModels data = new()
-                    {
-                        Carid = (int)CarComboBox.SelectedValue,
-                        ViolationID = (int)comboBoxViolations.SelectedValue,
-                        DriverFullName = richTextBoxDriverFullName.Text.ToString(),
-                        ViolationDate = ViolationDate.Value,
-                        RightOfManagement = ownerorproxycontrol,
-                        FineAmount = (decimal)fetchfineamount
-                    };
+
+                AddFeeModels data = new()
+                {
+                    Carid = (int)CarComboBox.SelectedValue,
+                    ViolationID = (int)comboBoxViolations.SelectedValue,
+                    DriverFullName = richTextBoxDriverFullName.Text.ToString(),
+                    ViolationDate = ViolationDate.Value,
+                    RightOfManagement = ownerorproxycontrol,
+                    FineAmount = (decimal)fetchfineamount
+                };
                 string query = "INSERT INTO FACTS_OF_VIOLATIONS (CarID, ViolationID, ViolationDate, DriverFullName, RightOfManagement,FineAmount,is_paid) " +
                        "VALUES (@CarID, @ViolationID, @ViolationDate, @DriverFullName, @RightOfManagement,@FineAmount,@is_paid)";
                 SqlCommand response = new(query, connection);
@@ -395,6 +470,166 @@ namespace TrafficFines
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                connection?.Close();
+            }
+        }
+        private void comboBoxViolations_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int? id = comboBoxViolations.SelectedValue as int?;
+            if (id == null)
+            {
+                return;
+            }
+
+            decimal? fetchfineamount = 0;
+            try
+            {
+                if (connection == null || connection.State == ConnectionState.Closed)
+                {
+                    connection?.Open();
+                }
+
+                string fetchfeequery = "SELECT FineAmount FROM TYPES_OF_VIOLATIONS WHERE ViolationID = @id";
+                SqlCommand command = new(fetchfeequery, connection);
+                command.Parameters.AddWithValue("@id", id ?? (object)DBNull.Value);
+
+                object resultfineamount = command.ExecuteScalar();
+
+                if (resultfineamount == DBNull.Value)
+                {
+                    MessageBox.Show("Something wrong happened, try again", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                fetchfineamount = (decimal?)resultfineamount;
+                Console.WriteLine($"Fine Amount: {fetchfineamount}\nComboBox ID: {id}");
+
+                // Label güncelleniyor
+                LabelFeeAmount.Text = fetchfineamount?.ToString() ?? "N/A";
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+            }
+            finally
+            {
+                connection?.Close();
+            }
+        }
+
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                int chooseline = dataGridView1.SelectedCells[0].RowIndex;
+                int? id = (int?)dataGridView1.Rows[chooseline].Cells[0].Value;
+
+                if (connection == null || connection.State == ConnectionState.Closed)
+                {
+                    connection?.Open();
+                }
+
+                string query = "SELECT F.*,T.FineAmount FROM FACTS_OF_VIOLATIONS F JOIN TYPES_OF_VIOLATIONS T ON T.ViolationID = F.ViolationID WHERE ViolationFactID = @id";
+                SqlCommand response = new(query, connection);
+                response.Parameters.AddWithValue("@id", id);
+
+                List<GetEditData> data = [];
+                using (SqlDataReader reader = response.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        data.Add(new GetEditData
+                        {
+                            ViolationFactID = reader["ViolationFactID"] != DBNull.Value ? Convert.ToInt32(reader["ViolationFactID"]) : (int?)null,
+                            carId = reader["CarID"] != DBNull.Value ? Convert.ToInt32(reader["CarID"]) : (int?)null,
+                            violationId = reader["ViolationID"] != DBNull.Value ? Convert.ToInt32(reader["ViolationID"]) : (int?)null,
+                            ViolationDate = reader["ViolationDate"] != DBNull.Value ? Convert.ToDateTime(reader["ViolationDate"]) : (DateTime?)null,
+                            DriverFullName = reader["DriverFullName"]?.ToString(),
+                            RightOfManagement = reader["RightOfManagement"]?.ToString(),
+                            FineAmount = (decimal)(reader["FineAmount"] != DBNull.Value ? Convert.ToDecimal(reader["FineAmount"]) : (decimal?)null),
+                        });
+
+                    }
+                }
+                foreach (var item in data)
+                {
+                    EditLoadCarsAndViolations((int)item.carId, (int)item.violationId);
+                    if (item.ViolationDate.HasValue)
+                    {
+                        EditViolationDate.Value = item.ViolationDate.Value;
+                    }
+                    else
+                    {
+                        EditViolationDate.Value = DateTime.Now;
+                    }
+                    richTextBoxEditDriverFullName.Text = item.DriverFullName.ToString();
+                    if (item.RightOfManagement == "Owner")
+                    {
+                        EditOwnerRadioButton.Checked = true;
+                        richTextBoxEditDriverFullName.Enabled = false;
+                    }
+                    else if (item.RightOfManagement == "Proxy")
+                    {
+                        EditProxyRadioButton.Checked = true;
+                        richTextBoxEditDriverFullName.Enabled = true;
+                        LabelEditFeeAmount.Text = item.FineAmount.ToString();
+                    }
+                    LabelEditFeeAmount.Text = item.FineAmount.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("SQL Error: " + ex.Message);
+                Console.WriteLine("SQL StackTrace: " + ex.StackTrace);
+            }
+        }
+
+        private void comboBoxEditViolations_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            int? id = comboBoxEditViolations.SelectedValue as int?;
+            if (id == null)
+            {
+                return;
+            }
+
+            decimal? fetchfineamount = 0;
+            try
+            {
+                if (connection == null || connection.State == ConnectionState.Closed)
+                {
+                    connection?.Open();
+                }
+
+                string fetchfeequery = "SELECT FineAmount FROM TYPES_OF_VIOLATIONS WHERE ViolationID = @id";
+                SqlCommand command = new(fetchfeequery, connection);
+                command.Parameters.AddWithValue("@id", id ?? (object)DBNull.Value);
+
+                object resultfineamount = command.ExecuteScalar();
+
+                if (resultfineamount == DBNull.Value)
+                {
+                    MessageBox.Show("Something wrong happened, try again", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                fetchfineamount = (decimal?)resultfineamount;
+                Console.WriteLine($"Fine Amount: {fetchfineamount}\nComboBox ID: {id}");
+
+                LabelEditFeeAmount.Text = fetchfineamount?.ToString() ?? "N/A";
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
             }
             finally
             {
