@@ -79,7 +79,7 @@ namespace TrafficFines
             dataGridView1.Location = new Point(12, 229);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
-            dataGridView1.Size = new Size(911, 150);
+            dataGridView1.Size = new Size(902, 150);
             dataGridView1.TabIndex = 0;
             dataGridView1.CellClick += dataGridView1_CellClick;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
@@ -300,10 +300,11 @@ namespace TrafficFines
             // 
             button2.Location = new Point(13, 173);
             button2.Name = "button2";
-            button2.Size = new Size(75, 23);
+            button2.Size = new Size(95, 23);
             button2.TabIndex = 10;
-            button2.Text = "Ceza kes";
+            button2.Text = "Cezayı Düzenle";
             button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             // 
             // CarEditComboBox
             // 
@@ -312,6 +313,7 @@ namespace TrafficFines
             CarEditComboBox.Name = "CarEditComboBox";
             CarEditComboBox.Size = new Size(121, 23);
             CarEditComboBox.TabIndex = 1;
+            CarEditComboBox.SelectedIndexChanged += CarEditComboBox_SelectedIndexChanged;
             // 
             // label8
             // 
@@ -352,6 +354,7 @@ namespace TrafficFines
             EditProxyRadioButton.TabStop = true;
             EditProxyRadioButton.Text = "Proxy";
             EditProxyRadioButton.UseVisualStyleBackColor = true;
+            EditProxyRadioButton.CheckedChanged += EditOwnerRadioButton_CheckedChanged;
             // 
             // EditOwnerRadioButton
             // 
@@ -363,6 +366,7 @@ namespace TrafficFines
             EditOwnerRadioButton.TabStop = true;
             EditOwnerRadioButton.Text = "Owner";
             EditOwnerRadioButton.UseVisualStyleBackColor = true;
+            EditOwnerRadioButton.CheckedChanged += EditOwnerRadioButton_CheckedChanged;
             // 
             // comboBoxEditViolations
             // 

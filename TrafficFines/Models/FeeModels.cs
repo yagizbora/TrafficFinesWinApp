@@ -55,6 +55,6 @@ namespace TrafficFines.Models
         public DateTime? ViolationDate { get; set; }
         public string? DriverFullName { get; set; }
         public string? RightOfManagement { get; set; }
-        public decimal FineAmount { get; set; }
+        public decimal? FineAmount { get; set; }
     }
 }

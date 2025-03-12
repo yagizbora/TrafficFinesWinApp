@@ -555,7 +555,7 @@ namespace TrafficFines
                             ViolationDate = reader["ViolationDate"] != DBNull.Value ? Convert.ToDateTime(reader["ViolationDate"]) : (DateTime?)null,
                             DriverFullName = reader["DriverFullName"]?.ToString(),
                             RightOfManagement = reader["RightOfManagement"]?.ToString(),
-                            FineAmount = (decimal)(reader["FineAmount"] != DBNull.Value ? Convert.ToDecimal(reader["FineAmount"]) : (decimal?)null),
+                            FineAmount = (decimal)(reader["FineAmount"] != DBNull.Value ? Convert.ToDecimal(reader["FineAmount"]) : (decimal?)0),
                         });
 
                     }
@@ -571,7 +571,7 @@ namespace TrafficFines
                     {
                         EditViolationDate.Value = DateTime.Now;
                     }
-                    richTextBoxEditDriverFullName.Text = item.DriverFullName.ToString();
+                    richTextBoxEditDriverFullName.Text = item.DriverFullName?.ToString();
                     if (item.RightOfManagement == "Owner")
                     {
                         EditOwnerRadioButton.Checked = true;
@@ -592,7 +592,10 @@ namespace TrafficFines
                 Console.WriteLine("SQL StackTrace: " + ex.StackTrace);
             }
         }
+        private void button2_Click(object sender, EventArgs e)
+        {
 
+        }
         private void comboBoxEditViolations_SelectedIndexChanged(object sender, EventArgs e)
         {
 
@@ -634,6 +637,89 @@ namespace TrafficFines
             finally
             {
                 connection?.Close();
+            }
+        }
+
+        private void CarEditComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            richTextBoxEditDriverFullName.Text = "";
+            if (EditProxyRadioButton.Checked || EditOwnerRadioButton.Checked)
+            {
+                EditOwnerRadioButton.Checked = false;
+                EditProxyRadioButton.Checked = false;
+                if (richTextBoxEditDriverFullName.Enabled == true)
+                {
+                    richTextBoxEditDriverFullName.Enabled = false;
+                }
+            }
+        }
+
+        private void EditOwnerRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButton? rb = sender as RadioButton;
+            //if (rb != null && rb.Checked)
+            //{
+            //    MessageBox.Show("Seçilen: " + rb.Text);
+            //}
+            if (EditOwnerRadioButton.Checked)
+            {
+                if (richTextBoxEditDriverFullName.Enabled == true)
+                {
+                    richTextBoxEditDriverFullName.Enabled = false;
+                }
+                try
+                {
+                    int? carid = (int?)CarEditComboBox.SelectedValue;
+
+                    if(carid == null)
+                    {
+                        //pass
+                        return;
+                    }
+
+                    if (connection == null || connection.State == ConnectionState.Closed)
+                    {
+                        connection?.Open();
+                    }
+                    //richTextBoxDriverFullName
+                    //Console.WriteLine(carid);
+
+                    string query = "SELECT OwnerFullName FROM CARS WHERE CarID = @id";
+                    SqlCommand response = new(query, connection);
+                    response.Parameters.AddWithValue("@id", carid);
+                    object data = response.ExecuteScalar();
+                    //Console.WriteLine(data);
+                    if (data != null)
+                    {
+                        var result = new
+                        {
+                            OwnerFullName = data.ToString()
+                        };
+                        string json = JsonSerializer.Serialize(result);
+                        //Console.WriteLine(json);
+                        richTextBoxEditDriverFullName.Text = result.OwnerFullName;
+                    }
+                    else
+                    {
+                        if (richTextBoxEditDriverFullName.Enabled == true)
+                        {
+                            richTextBoxEditDriverFullName.Enabled = false;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                finally
+                {
+                    connection?.Close();
+                }
+            }
+            else if (EditProxyRadioButton.Checked)
+            {
+                richTextBoxEditDriverFullName.Enabled = true;
+                richTextBoxEditDriverFullName.Text = "";
             }
         }
     }
