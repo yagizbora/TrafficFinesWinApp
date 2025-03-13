@@ -57,4 +57,14 @@ namespace TrafficFines.Models
         public string? RightOfManagement { get; set; }
         public decimal? FineAmount { get; set; }
     }
+    class EditFeeModels
+    {
+        public int? ViolationFactID { get; set; }
+        public required int Carid { get; set; }
+        public required int? ViolationID { get; set; }
+        public required DateTime ViolationDate { get; set; }
+        public required string DriverFullName { get; set; }
+        public required string RightOfManagement { get; set; }
+        public required decimal FineAmount { get; set; }
+    }
 }

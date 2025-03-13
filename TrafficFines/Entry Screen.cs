@@ -16,7 +16,7 @@ namespace TrafficFines
 
         Violation_Operations_Form? violationform;
 
-        Fee? feeforms;
+        Fine? feeforms;
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -54,7 +54,7 @@ namespace TrafficFines
 
         private void button3_Click(object sender, EventArgs e)
         {
-            feeforms = new Fee();
+            feeforms = new Fine();
             feeforms?.Show();
         }
     }

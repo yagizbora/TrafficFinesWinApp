@@ -1,22 +1,37 @@
 ﻿using DotNetEnv;
 using Microsoft.Data.SqlClient;
-using Sprache;
 using System.Data;
 using System.Text.Json;
-using System.Windows.Forms;
 using TrafficFines.Models;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 
 namespace TrafficFines
 {
-    public partial class Fee : Form
+    public partial class Fine : Form
     {
-        public Fee()
+        public Fine()
         {
             InitializeComponent();
         }
         SqlConnection? connection;
+
+        public void cleareditallfield()
+        {
+            editdataid = null;
+            if (EditOwnerRadioButton.Checked)
+            {
+            EditOwnerRadioButton.Checked = false;
+            }
+            if (EditProxyRadioButton.Checked)
+            {
+                EditProxyRadioButton.Checked = false;
+            }
+            richTextBoxEditDriverFullName.Text = "";
+            richTextBoxEditDriverFullName.Enabled = false;
+            EditViolationDate.Value = DateTime.Now;
+            LabelEditFeeAmount.Text = "";
+        }
+
         public void LoadCars()
         {
             try
@@ -460,7 +475,7 @@ namespace TrafficFines
 
                 if (affectedRows > 0)
                 {
-                    MessageBox.Show("Fee is created!", "Succesfull!");
+                    MessageBox.Show("Fine is created!", "Succesfull!");
                     ShowViolations();
                     LoadCars();
                     LoadViolations();
@@ -525,13 +540,14 @@ namespace TrafficFines
         {
 
         }
-
+        public int? editdataid = null;
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             try
             {
                 int chooseline = dataGridView1.SelectedCells[0].RowIndex;
                 int? id = (int?)dataGridView1.Rows[chooseline].Cells[0].Value;
+                editdataid = id;
 
                 if (connection == null || connection.State == ConnectionState.Closed)
                 {
@@ -594,7 +610,95 @@ namespace TrafficFines
         }
         private void button2_Click(object sender, EventArgs e)
         {
+            if (editdataid == null)
+            {
+                MessageBox.Show("Please Choose Fine", "Warning!");
+                return;
+            }
+            try
+            {
+                if (connection == null || connection.State == ConnectionState.Closed)
+                {
+                    connection?.Open();
+                }
+                string ownerorproxycontrol = "";
+                if (EditOwnerRadioButton.Checked)
+                {
+                    ownerorproxycontrol = EditOwnerRadioButton.Text.Trim();
+                }
+                else if (EditProxyRadioButton.Checked)
+                {
+                    ownerorproxycontrol = EditProxyRadioButton.Text.Trim();
+                }
 
+
+                decimal? fetchfineamount = 0;
+                string fetchfeequery = "SELECT FineAmount AS FineAmount FROM TYPES_OF_VIOLATIONS WHERE ViolationID = @id";
+                SqlCommand command = new(fetchfeequery, connection);
+                command.Parameters.AddWithValue("@id", comboBoxEditViolations.SelectedValue);
+                object resultfineamonut = command.ExecuteScalar();
+
+                if (resultfineamonut != null)
+                {
+                    if (resultfineamonut == DBNull.Value)
+                    {
+                        MessageBox.Show("Something wrong happen try again", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    var result = new
+                    {
+                        fineamount = (decimal)resultfineamonut
+                    };
+                    string json = JsonSerializer.Serialize(result);
+                    fetchfineamount = (decimal)result.fineamount;
+                }
+
+
+
+                EditFeeModels data = new()
+                {
+                    ViolationFactID = editdataid,
+                    Carid = (int)CarEditComboBox.SelectedValue,
+                    ViolationID = (int)comboBoxEditViolations.SelectedValue,
+                    DriverFullName = richTextBoxEditDriverFullName.Text.ToString(),
+                    ViolationDate = EditViolationDate.Value,
+                    RightOfManagement = ownerorproxycontrol,
+                    FineAmount = (decimal)fetchfineamount
+                };
+
+                string query = "UPDATE FACTS_OF_VIOLATIONS SET CarID = @carid, ViolationID = @ViolationID, ViolationDate = @violationdate , DriverFullname = @DriverFullname," +
+                    "RightOfManagement = @RightOfManagement, FineAmount = @FineAmount WHERE ViolationFactId= @id";
+                SqlCommand response = new(query, connection);
+                response.Parameters.AddWithValue("@id", data.ViolationFactID);
+                response.Parameters.AddWithValue("@carid", data.Carid);
+                response.Parameters.AddWithValue("@ViolationID", data.ViolationID);
+                response.Parameters.AddWithValue("@ViolationDate", data.ViolationDate);
+                response.Parameters.AddWithValue("@DriverFullName", data.DriverFullName);
+                response.Parameters.AddWithValue("@RightOfManagement", data.RightOfManagement);
+                response.Parameters.AddWithValue("@FineAmount", data.FineAmount);
+                int affectedRows = response.ExecuteNonQuery();
+
+                if (affectedRows > 0)
+                {
+                    MessageBox.Show("Fine is edited!", "Succesfull!");
+                    ShowViolations();
+                    LoadCars();
+                    LoadViolations();
+                    cleareditallfield();
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                Console.WriteLine(ex.Message);
+                Console.WriteLine("SQL StackTrace: " + ex.StackTrace);
+
+            }
+            finally
+            {
+                connection?.Close();
+            }
         }
         private void comboBoxEditViolations_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -671,7 +775,7 @@ namespace TrafficFines
                 {
                     int? carid = (int?)CarEditComboBox.SelectedValue;
 
-                    if(carid == null)
+                    if (carid == null)
                     {
                         //pass
                         return;
@@ -720,6 +824,48 @@ namespace TrafficFines
             {
                 richTextBoxEditDriverFullName.Enabled = true;
                 richTextBoxEditDriverFullName.Text = "";
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (connection == null || connection.State == ConnectionState.Closed)
+                {
+                    connection?.Open();
+                }
+
+                if (editdataid == null)
+                {
+                    MessageBox.Show("Choose Fine! ", "Error!");
+                    return;
+                }
+
+                string query = "DELETE FROM FACTS_OF_VIOLATIONS WHERE ViolationFactID = @id";
+                SqlCommand response = new(query, connection);
+                response.Parameters.AddWithValue("@id", editdataid);
+                int affectedrows = response.ExecuteNonQuery();
+                if (affectedrows > 0)
+                {
+                    MessageBox.Show($"Fine amount is succesfull \n " +
+                        $"{affectedrows} data was deleted"
+                        , "Success!");
+                    ShowViolations();
+                    LoadCars();
+                    LoadViolations();
+                    cleareditallfield();
+                    return;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                connection?.Close();
             }
         }
     }

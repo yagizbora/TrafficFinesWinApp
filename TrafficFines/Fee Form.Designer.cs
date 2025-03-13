@@ -2,7 +2,7 @@
 
 namespace TrafficFines
 {
-    partial class Fee
+    partial class Fine
     {
         /// <summary>
         /// Required designer variable.
@@ -63,6 +63,7 @@ namespace TrafficFines
             label10 = new Label();
             label11 = new Label();
             EditViolationDate = new DateTimePicker();
+            button3 = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -205,7 +206,7 @@ namespace TrafficFines
             button1.Name = "button1";
             button1.Size = new Size(75, 23);
             button1.TabIndex = 10;
-            button1.Text = "Ceza kes";
+            button1.Text = "Give a fine";
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
@@ -228,7 +229,7 @@ namespace TrafficFines
             groupBox2.Size = new Size(448, 211);
             groupBox2.TabIndex = 11;
             groupBox2.TabStop = false;
-            groupBox2.Text = "Create Fee";
+            groupBox2.Text = "Create Fine";
             // 
             // LabelFeeAmount
             // 
@@ -244,12 +245,13 @@ namespace TrafficFines
             label5.AutoSize = true;
             label5.Location = new Point(156, 85);
             label5.Name = "label5";
-            label5.Size = new Size(75, 15);
+            label5.Size = new Size(79, 15);
             label5.TabIndex = 11;
-            label5.Text = "Fee Amonut:";
+            label5.Text = "Fine Amonut:";
             // 
             // groupBox3
             // 
+            groupBox3.Controls.Add(button3);
             groupBox3.Controls.Add(LabelEditFeeAmount);
             groupBox3.Controls.Add(label7);
             groupBox3.Controls.Add(richTextBoxEditDriverFullName);
@@ -267,7 +269,7 @@ namespace TrafficFines
             groupBox3.Size = new Size(448, 202);
             groupBox3.TabIndex = 12;
             groupBox3.TabStop = false;
-            groupBox3.Text = "Edit Fee";
+            groupBox3.Text = "Edit Fine";
             // 
             // LabelEditFeeAmount
             // 
@@ -283,9 +285,9 @@ namespace TrafficFines
             label7.AutoSize = true;
             label7.Location = new Point(156, 85);
             label7.Name = "label7";
-            label7.Size = new Size(75, 15);
+            label7.Size = new Size(79, 15);
             label7.TabIndex = 11;
-            label7.Text = "Fee Amonut:";
+            label7.Text = "Fine Amonut:";
             // 
             // richTextBoxEditDriverFullName
             // 
@@ -302,7 +304,7 @@ namespace TrafficFines
             button2.Name = "button2";
             button2.Size = new Size(95, 23);
             button2.TabIndex = 10;
-            button2.Text = "Cezayı Düzenle";
+            button2.Text = "Edit the Fine";
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click;
             // 
@@ -405,7 +407,17 @@ namespace TrafficFines
             EditViolationDate.Size = new Size(139, 23);
             EditViolationDate.TabIndex = 5;
             // 
-            // Fee
+            // button3
+            // 
+            button3.Location = new Point(114, 173);
+            button3.Name = "button3";
+            button3.Size = new Size(100, 23);
+            button3.TabIndex = 13;
+            button3.Text = "Delete The Fine";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
+            // 
+            // Fine
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -413,8 +425,8 @@ namespace TrafficFines
             Controls.Add(groupBox3);
             Controls.Add(groupBox2);
             Controls.Add(dataGridView1);
-            Name = "Fee";
-            Text = "Fee";
+            Name = "Fine";
+            Text = "Fine Form";
             Load += Violations_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             groupBox1.ResumeLayout(false);
@@ -462,5 +474,6 @@ namespace TrafficFines
         private Label label10;
         private Label label11;
         private DateTimePicker EditViolationDate;
+        private Button button3;
     }
 }
