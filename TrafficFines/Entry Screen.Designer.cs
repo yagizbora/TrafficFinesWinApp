@@ -1,6 +1,6 @@
 ﻿namespace TrafficFines
 {
-    partial class Form1
+    partial class Entry_Screen
     {
         /// <summary>
         ///  Required designer variable.
@@ -34,6 +34,8 @@
             label2 = new Label();
             label3 = new Label();
             button3 = new Button();
+            button4 = new Button();
+            label4 = new Label();
             SuspendLayout();
             // 
             // label1
@@ -93,18 +95,39 @@
             button3.UseVisualStyleBackColor = true;
             button3.Click += button3_Click;
             // 
-            // Form1
+            // button4
+            // 
+            button4.Location = new Point(98, 155);
+            button4.Name = "button4";
+            button4.Size = new Size(93, 23);
+            button4.TabIndex = 9;
+            button4.Text = "Open Panel";
+            button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(106, 137);
+            label4.Name = "label4";
+            label4.Size = new Size(85, 15);
+            label4.TabIndex = 8;
+            label4.Text = "Payment Form";
+            // 
+            // Entry_Screen
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(321, 190);
+            Controls.Add(button4);
+            Controls.Add(label4);
             Controls.Add(button3);
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(button2);
             Controls.Add(label1);
             Controls.Add(button1);
-            Name = "Form1";
+            Name = "Entry_Screen";
             Text = "Traffic Fines App Entry";
             Load += Form1_Load;
             ResumeLayout(false);
@@ -119,5 +142,7 @@
         private Label label2;
         private Label label3;
         private Button button3;
+        private Button button4;
+        private Label label4;
     }
 }

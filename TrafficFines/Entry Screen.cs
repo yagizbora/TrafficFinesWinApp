@@ -4,9 +4,9 @@ using Microsoft.Data.SqlClient;
 
 namespace TrafficFines
 {
-    public partial class Form1 : Form
+    public partial class Entry_Screen : Form
     {
-        public Form1()
+        public Entry_Screen()
         {
             InitializeComponent();
         }
@@ -15,6 +15,7 @@ namespace TrafficFines
         Car_Operations_Form? addcarform;
 
         Violation_Operations_Form? violationform;
+        Payment_Fine_Form? paymentform;
 
         Fine? feeforms;
 
@@ -56,6 +57,12 @@ namespace TrafficFines
         {
             feeforms = new Fine();
             feeforms?.Show();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            paymentform = new Payment_Fine_Form();
+            paymentform?.Show();
         }
     }
 }
