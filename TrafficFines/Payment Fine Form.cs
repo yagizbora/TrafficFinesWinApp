@@ -13,6 +13,18 @@ namespace TrafficFines
         {
             InitializeComponent();
         }
+
+        public void ClearAllField()
+        {
+            textBoxViolationFactID.Text = "";
+            textBoxFineAmount.Text = "";
+            textBoxReceiptNumber.Text = "";
+            textBoxViolationType.Text = "";
+            richTextBoxDriverFullName.Text = "";
+            richTextBoxOverDueDays.Text = "";
+            textBoxModel.Text = "";
+            dateTimePickerViolationDate.Value = DateTime.Now;
+        }
         public void GetFine(int id)
         {
             try
@@ -67,8 +79,8 @@ namespace TrafficFines
                 {
                     if (item.is_paid)
                     {
-                        MessageBox.Show("This Fine this paid!");
-                        return;
+                       MessageBox.Show("This Fine this paid!");
+                       return;
                     }
 
                     DateTime checkPaymentDate = DateTime.Now;
@@ -187,6 +199,7 @@ namespace TrafficFines
                 if(affectedrows > 0)
                 {
                     MessageBox.Show("Payment is updated fine is paid!","Successfully!");
+                    ClearAllField();
                 };
             }
             catch (Exception ex)
