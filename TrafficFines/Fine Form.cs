@@ -80,12 +80,14 @@ namespace TrafficFines
                 }
 
                 string query = "SELECT F.ViolationFactID, C.LicensePlate, C.OwnerFullName, " +
-                               "T.ViolationType, F.FineAmount, F.ViolationDate,f.is_paid, " +
-                               "F.DriverFullName, F.RightOfManagement " +
-                               "FROM FACTS_OF_VIOLATIONS F " +
-                               "JOIN CARS C ON F.CarID = C.CarID " +
-                               "JOIN TYPES_OF_VIOLATIONS T ON F.ViolationID = T.ViolationID " +
-                               "ORDER BY F.ViolationDate DESC;";
+                              "T.ViolationType, F.FineAmount, F.ViolationDate, F.is_paid, " +
+                              "F.ViolationPaymentDate, F.PaymentAmount,F.PaymentMethod, " +  
+                              "F.DriverFullName, F.RightOfManagement " +
+                              "FROM FACTS_OF_VIOLATIONS F " +
+                              "JOIN CARS C ON F.CarID = C.CarID " +
+                              "JOIN TYPES_OF_VIOLATIONS T ON F.ViolationID = T.ViolationID " +
+                              "ORDER BY F.ViolationDate DESC;";
+
 
                 SqlCommand command = new(query, connection);
                 SqlDataReader reader = command.ExecuteReader();
@@ -106,7 +108,10 @@ namespace TrafficFines
                         ViolationDate = reader["ViolationDate"] != DBNull.Value ? Convert.ToDateTime(reader["ViolationDate"]) : (DateTime?)null,
                         DriverFullName = reader["DriverFullName"]?.ToString(),
                         RightOfManagement = reader["RightOfManagement"]?.ToString(),
-                        is_paid = !reader.IsDBNull(isPaidIndex) ? (bool?)Convert.ToBoolean(reader["is_paid"]) : null
+                        is_paid = !reader.IsDBNull(isPaidIndex) ? (bool?)Convert.ToBoolean(reader["is_paid"]) : null,
+                        PaymentAmount = reader["PaymentAmount"] != DBNull.Value ? Convert.ToDecimal(reader["PaymentAmount"]) : (decimal?)null,
+                        PaymentMethod = reader["PaymentMethod"]?.ToString(),
+                        ViolationPaymentDate = reader["ViolationPaymentDate"] != DBNull.Value ? Convert.ToDateTime(reader["ViolationPaymentDate"]) : (DateTime?)null
                     });
                 }
 
@@ -170,10 +175,29 @@ namespace TrafficFines
                     DataPropertyName = "is_paid",
                     DisplayIndex = 8
                 });
+                dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
+                {
+                    HeaderText = "Violation Payment Date",
+                    DataPropertyName = "ViolationPaymentDate",
+                    DisplayIndex = 9
+                });
+                dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
+                {
+                    HeaderText = "Payment Method",
+                    DataPropertyName = "PaymentMethod",
+                    DisplayIndex = 10
+                });
+                dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
+                {
+                    HeaderText = "Payment Amount",
+                    DataPropertyName = "PaymentAmount",
+                    DisplayIndex = 11
+                });
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error: " + ex.Message);
+                Console.WriteLine(ex.Message);
             }
             finally
             {

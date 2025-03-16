@@ -27,6 +27,10 @@ namespace TrafficFines.Models
         public string? DriverFullName { get; set; }
         public string? RightOfManagement { get; set; }
         public bool? is_paid { get; set; }
+        public decimal? PaymentAmount { get; set; }
+        public string? PaymentMethod { get; set; }
+        public DateTime? ViolationPaymentDate { get; set; }
+
     }
     class AddFeeModels
     {
