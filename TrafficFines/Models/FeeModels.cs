@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TrafficFines.Models
+﻿namespace TrafficFines.Models
 {
     class ViolationComboBoxModels
     {
@@ -55,7 +49,7 @@ namespace TrafficFines.Models
     {
         public int? ViolationFactID { get; set; }
         public int? carId { get; set; }
-        public int? violationId { get; set;}
+        public int? violationId { get; set; }
         public DateTime? ViolationDate { get; set; }
         public string? DriverFullName { get; set; }
         public string? RightOfManagement { get; set; }

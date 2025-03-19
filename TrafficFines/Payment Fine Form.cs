@@ -79,8 +79,8 @@ namespace TrafficFines
                 {
                     if (item.is_paid)
                     {
-                       MessageBox.Show("This Fine this paid!");
-                       return;
+                        MessageBox.Show("This Fine this paid!");
+                        return;
                     }
 
                     DateTime checkPaymentDate = DateTime.Now;
@@ -163,7 +163,7 @@ namespace TrafficFines
 
                 string paymentmethodcontrol = "";
 
-                if(radioButtonCash.Checked)
+                if (radioButtonCash.Checked)
                 {
                     paymentmethodcontrol = radioButtonCash.Text;
                 }
@@ -172,9 +172,9 @@ namespace TrafficFines
                     paymentmethodcontrol = radioButtonCreditCard.Text;
                 }
 
-                if(string.IsNullOrEmpty(textBoxFineAmount.Text) || numericUpDownViolationFactID.Value == 0 || string.IsNullOrEmpty(paymentmethodcontrol))
+                if (string.IsNullOrEmpty(textBoxFineAmount.Text) || numericUpDownViolationFactID.Value == 0 || string.IsNullOrEmpty(paymentmethodcontrol))
                 {
-                    MessageBox.Show("You cannot pay fine becuase you didn't fetch!","Error",MessageBoxButtons.OKCancel,MessageBoxIcon.Error);
+                    MessageBox.Show("You cannot pay fine becuase you didn't fetch!", "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
                 }
 
                 PaymmentFineModels data = new()
@@ -191,20 +191,21 @@ namespace TrafficFines
                 string query = "UPDATE FACTS_OF_VIOLATIONS SET is_paid = @is_paid,ReceiptNumber = @ReceiptNumber," +
                     "ViolationPaymentDate = @ViolationPaymentDate,PaymentMethod = @PaymentMethod,PaymentAmount = @PaymentAmount,DiscountOrPenaltyReason = @DiscountOrPenaltyReason WHERE ViolationFactID = @id";
                 SqlCommand response = new(query, connection);
-                response.Parameters.AddWithValue("@is_paid",data.is_paid);
+                response.Parameters.AddWithValue("@is_paid", data.is_paid);
                 response.Parameters.AddWithValue("@PaymentAmonut", data.PaymentAmount);
-                response.Parameters.AddWithValue("@ReceiptNumber",data.ReceiptNumber);
+                response.Parameters.AddWithValue("@ReceiptNumber", data.ReceiptNumber);
                 response.Parameters.AddWithValue("@ViolationPaymentDate", data.ViolationPaymentDate);
                 response.Parameters.AddWithValue("@PaymentMethod", data.PaymentMethod);
                 response.Parameters.AddWithValue("@PaymentAmount", data.PaymentAmount);
                 response.Parameters.AddWithValue("@DiscountOrPenaltyReason", data.DiscountOrPenaltyReason);
-                response.Parameters.AddWithValue("@id",data.ViolationFactID);
+                response.Parameters.AddWithValue("@id", data.ViolationFactID);
                 int affectedrows = response.ExecuteNonQuery();
-                if(affectedrows > 0)
+                if (affectedrows > 0)
                 {
-                    MessageBox.Show("Payment is updated fine is paid!","Successfully!");
+                    MessageBox.Show("Payment is updated fine is paid!", "Successfully!");
                     ClearAllField();
-                };
+                }
+                ;
             }
             catch (Exception ex)
             {

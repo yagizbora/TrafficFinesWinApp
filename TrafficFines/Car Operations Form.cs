@@ -53,7 +53,7 @@ namespace TrafficFines
                 {
                     HeaderText = "Car ID",
                     DataPropertyName = "Carid",
-                        DisplayIndex = 0
+                    DisplayIndex = 0
                 });
                 dataGridViewCars.Columns.Add(new DataGridViewTextBoxColumn
                 {

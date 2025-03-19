@@ -2,7 +2,6 @@
 using Microsoft.Data.SqlClient;
 using System.Data;
 using TrafficFines.Models;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace TrafficFines
 {
@@ -212,9 +211,9 @@ namespace TrafficFines
                 SqlCommand response = new(query, connection);
                 response.Parameters.AddWithValue("@id", data.Id);
                 int affectedRows = response.ExecuteNonQuery();
-               if(affectedRows > 0)
+                if (affectedRows > 0)
                 {
-                    MessageBox.Show("Violation is deleted!","Succesfully");
+                    MessageBox.Show("Violation is deleted!", "Succesfully");
                     ShowData();
 
                 }

@@ -20,7 +20,7 @@ namespace TrafficFines
             editdataid = null;
             if (EditOwnerRadioButton.Checked)
             {
-            EditOwnerRadioButton.Checked = false;
+                EditOwnerRadioButton.Checked = false;
             }
             if (EditProxyRadioButton.Checked)
             {
@@ -79,12 +79,12 @@ namespace TrafficFines
                     connection?.Open();
                 }
 
-                string query = "SELECT F.ViolationFactID, C.LicensePlate, C.OwnerFullName, " +
-                              "T.ViolationType, F.FineAmount, F.ViolationDate, F.is_paid, " +
-                              "F.ViolationPaymentDate, F.PaymentAmount,F.PaymentMethod, " +
-                              "F.DriverFullName, F.RightOfManagement,F.DiscountOrPenaltyReason " +
-                              "FROM FACTS_OF_VIOLATIONS F " +
-                              "JOIN CARS C ON F.CarID = C.CarID " +
+                string query = "SELECT F.ViolationFactID, C.LicensePlate, C.OwnerFullName," +
+                              "T.ViolationType, F.FineAmount, F.ViolationDate, F.is_paid," +
+                              "F.ViolationPaymentDate, F.PaymentAmount,F.PaymentMethod," +
+                              "F.DriverFullName, F.RightOfManagement,F.DiscountOrPenaltyReason" +
+                              "FROM FACTS_OF_VIOLATIONS F" +
+                              "JOIN CARS C ON F.CarID = C.CarID" +
                               "JOIN TYPES_OF_VIOLATIONS T ON F.ViolationID = T.ViolationID " +
                               "ORDER BY F.ViolationDate DESC;";
 
@@ -120,7 +120,7 @@ namespace TrafficFines
                 reader.Close();
                 dataGridView1.AutoGenerateColumns = false;
                 dataGridView1.DataSource = violations;
-                
+
 
                 dataGridView1.Columns.Clear();
                 dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
@@ -698,8 +698,12 @@ namespace TrafficFines
                     FineAmount = (decimal)fetchfineamount
                 };
 
-                string query = "UPDATE FACTS_OF_VIOLATIONS SET CarID = @carid, ViolationID = @ViolationID, ViolationDate = @violationdate , DriverFullname = @DriverFullname," +
-                    "RightOfManagement = @RightOfManagement, FineAmount = @FineAmount WHERE ViolationFactId= @id";
+                string query = "UPDATE FACTS_OF_VIOLATIONS SET CarID = @carid," +
+                    "ViolationID = @ViolationID, ViolationDate = @violationdate," +
+                    "DriverFullname = @DriverFullname," +
+                    "RightOfManagement = @RightOfManagement," +
+                    "FineAmount = @FineAmount" +
+                    "WHERE ViolationFactId= @id";
                 SqlCommand response = new(query, connection);
                 response.Parameters.AddWithValue("@id", data.ViolationFactID);
                 response.Parameters.AddWithValue("@carid", data.Carid);

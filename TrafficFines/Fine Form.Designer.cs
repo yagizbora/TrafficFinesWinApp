@@ -420,13 +420,15 @@ namespace TrafficFines
             // 
             // Fine
             // 
-            AutoScaleDimensions = new SizeF(96F, 96F);
-            AutoScaleMode = AutoScaleMode.Dpi;
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            AutoScroll = true;
             BackColor = SystemColors.MenuHighlight;
             ClientSize = new Size(1118, 416);
             Controls.Add(groupBox3);
             Controls.Add(groupBox2);
             Controls.Add(dataGridView1);
+            MaximizeBox = false;
             Name = "Fine";
             Text = "Fine Form";
             Load += Violations_Load;

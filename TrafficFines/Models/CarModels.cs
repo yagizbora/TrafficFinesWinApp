@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TrafficFines.Models
+﻿namespace TrafficFines.Models
 {
     class CarModels
     {
@@ -16,7 +10,8 @@ namespace TrafficFines.Models
         public string? OwnerFullName { get; set; }
         public string? OwnerPassportData { get; set; }
     }
-    class AddCarModels {
+    class AddCarModels
+    {
         public string? Model { get; set; }
         public int? YearOfRelease { get; set; }
         public string? LicensePlate { get; set; }
