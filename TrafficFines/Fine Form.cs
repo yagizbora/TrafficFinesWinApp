@@ -762,7 +762,7 @@ namespace TrafficFines
                 }
 
                 fetchfineamount = (decimal?)resultfineamount;
-                Console.WriteLine($"Fine Amount: {fetchfineamount}\nComboBox ID: {id}");
+                //Console.WriteLine($"Fine Amount: {fetchfineamount}\nComboBox ID: {id}");
 
                 LabelEditFeeAmount.Text = fetchfineamount?.ToString() ?? "N/A";
             }
