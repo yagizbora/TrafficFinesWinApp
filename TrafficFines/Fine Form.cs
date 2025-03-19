@@ -883,7 +883,7 @@ namespace TrafficFines
                 int affectedrows = response.ExecuteNonQuery();
                 if (affectedrows > 0)
                 {
-                    MessageBox.Show($"Fine data is succesfull \n " +
+                    MessageBox.Show($"Fine data is succesfully deleted \n " +
                         $"{affectedrows} data was deleted"
                         , "Success!");
                     ShowViolations();
