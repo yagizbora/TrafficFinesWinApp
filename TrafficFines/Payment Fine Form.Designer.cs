@@ -48,12 +48,12 @@
             label2 = new Label();
             textBoxFineAmount = new TextBox();
             groupBox3 = new GroupBox();
+            button2 = new Button();
             groupBox4 = new GroupBox();
             radioButtonCreditCard = new RadioButton();
             radioButtonCash = new RadioButton();
             textBoxReceiptNumber = new TextBox();
             label9 = new Label();
-            button2 = new Button();
             ((System.ComponentModel.ISupportInitialize)numericUpDownViolationFactID).BeginInit();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -258,6 +258,16 @@
             groupBox3.TabStop = false;
             groupBox3.Text = "Payment";
             // 
+            // button2
+            // 
+            button2.Location = new Point(7, 66);
+            button2.Name = "button2";
+            button2.Size = new Size(75, 23);
+            button2.TabIndex = 3;
+            button2.Text = "Pay Fine";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
+            // 
             // groupBox4
             // 
             groupBox4.Controls.Add(radioButtonCreditCard);
@@ -307,16 +317,6 @@
             label9.TabIndex = 0;
             label9.Text = "Receipt Number";
             // 
-            // button2
-            // 
-            button2.Location = new Point(7, 66);
-            button2.Name = "button2";
-            button2.Size = new Size(75, 23);
-            button2.TabIndex = 3;
-            button2.Text = "Pay Fine";
-            button2.UseVisualStyleBackColor = true;
-            button2.Click += button2_Click;
-            // 
             // Payment_Fine_Form
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -326,6 +326,7 @@
             Controls.Add(groupBox3);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
+            MaximizeBox = false;
             Name = "Payment_Fine_Form";
             Text = "Payment Fine Form";
             Load += Payment_Fine_Form_Load;

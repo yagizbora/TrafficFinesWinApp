@@ -421,6 +421,7 @@
             Controls.Add(groupBox2);
             Controls.Add(dataGridViewCars);
             Controls.Add(groupBox1);
+            MaximizeBox = false;
             Name = "Car_Operations_Form";
             Text = "Add Car Form";
             Load += Add_Car_Form_Load;

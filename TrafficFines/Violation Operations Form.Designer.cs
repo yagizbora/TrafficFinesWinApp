@@ -220,6 +220,7 @@
             Controls.Add(groupBox1);
             Controls.Add(dataGridViewViolation);
             FormBorderStyle = FormBorderStyle.Fixed3D;
+            MaximizeBox = false;
             Name = "Violation_Operations_Form";
             Text = "Violation Operations Form";
             Load += Violation_Operations_Form_Load;

@@ -127,6 +127,7 @@
             Controls.Add(button2);
             Controls.Add(label1);
             Controls.Add(button1);
+            MaximizeBox = false;
             Name = "Entry_Screen";
             Text = "Traffic Fines App Entry";
             Load += Form1_Load;

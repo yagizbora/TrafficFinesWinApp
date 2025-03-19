@@ -75,7 +75,6 @@ namespace TrafficFines
             // 
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.AllowUserToDeleteRows = false;
-            dataGridView1.AllowUserToOrderColumns = true;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Location = new Point(12, 254);
             dataGridView1.Name = "dataGridView1";
@@ -212,6 +211,7 @@ namespace TrafficFines
             // 
             // groupBox2
             // 
+            groupBox2.BackColor = SystemColors.MenuHighlight;
             groupBox2.Controls.Add(LabelFeeAmount);
             groupBox2.Controls.Add(label5);
             groupBox2.Controls.Add(richTextBoxDriverFullName);
@@ -251,6 +251,7 @@ namespace TrafficFines
             // 
             // groupBox3
             // 
+            groupBox3.BackColor = SystemColors.MenuHighlight;
             groupBox3.Controls.Add(button3);
             groupBox3.Controls.Add(LabelEditFeeAmount);
             groupBox3.Controls.Add(label7);
@@ -419,8 +420,9 @@ namespace TrafficFines
             // 
             // Fine
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleMode = AutoScaleMode.Dpi;
+            BackColor = SystemColors.MenuHighlight;
             ClientSize = new Size(1118, 416);
             Controls.Add(groupBox3);
             Controls.Add(groupBox2);
