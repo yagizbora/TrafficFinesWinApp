@@ -857,7 +857,7 @@ namespace TrafficFines
                 richTextBoxEditDriverFullName.Enabled = true;
                 if (!string.IsNullOrEmpty(richTextBoxDriverFullName.Text))
                 {
-                richTextBoxEditDriverFullName.Text = "";
+                    richTextBoxEditDriverFullName.Text = "";
                 }
             }
         }
@@ -883,7 +883,7 @@ namespace TrafficFines
                 int affectedrows = response.ExecuteNonQuery();
                 if (affectedrows > 0)
                 {
-                    MessageBox.Show($"Fine amount is succesfull \n " +
+                    MessageBox.Show($"Fine data is succesfull \n " +
                         $"{affectedrows} data was deleted"
                         , "Success!");
                     ShowViolations();
