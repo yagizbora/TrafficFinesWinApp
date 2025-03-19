@@ -29,6 +29,7 @@ namespace TrafficFines.Models
         public required string ViolationPayment { get; set; }
         public required DateTime ViolationPaymentDate { get; set; }
         public required string PaymentAmount { get; set; }
+        public string? DiscountOrPenaltyReason { get; set; }
     }
 
 }

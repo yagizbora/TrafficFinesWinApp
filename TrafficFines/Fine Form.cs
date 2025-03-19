@@ -81,8 +81,8 @@ namespace TrafficFines
 
                 string query = "SELECT F.ViolationFactID, C.LicensePlate, C.OwnerFullName, " +
                               "T.ViolationType, F.FineAmount, F.ViolationDate, F.is_paid, " +
-                              "F.ViolationPaymentDate, F.PaymentAmount,F.PaymentMethod, " +  
-                              "F.DriverFullName, F.RightOfManagement " +
+                              "F.ViolationPaymentDate, F.PaymentAmount,F.PaymentMethod, " +
+                              "F.DriverFullName, F.RightOfManagement,F.DiscountOrPenaltyReason " +
                               "FROM FACTS_OF_VIOLATIONS F " +
                               "JOIN CARS C ON F.CarID = C.CarID " +
                               "JOIN TYPES_OF_VIOLATIONS T ON F.ViolationID = T.ViolationID " +
@@ -111,7 +111,8 @@ namespace TrafficFines
                         is_paid = !reader.IsDBNull(isPaidIndex) ? (bool?)Convert.ToBoolean(reader["is_paid"]) : null,
                         PaymentAmount = reader["PaymentAmount"] != DBNull.Value ? Convert.ToDecimal(reader["PaymentAmount"]) : (decimal?)null,
                         PaymentMethod = reader["PaymentMethod"]?.ToString(),
-                        ViolationPaymentDate = reader["ViolationPaymentDate"] != DBNull.Value ? Convert.ToDateTime(reader["ViolationPaymentDate"]) : (DateTime?)null
+                        ViolationPaymentDate = reader["ViolationPaymentDate"] != DBNull.Value ? Convert.ToDateTime(reader["ViolationPaymentDate"]) : (DateTime?)null,
+                        DiscountOrPenaltyReason = reader["DiscountOrPenaltyReason"]?.ToString()
                     });
                 }
 
@@ -119,6 +120,7 @@ namespace TrafficFines
                 reader.Close();
                 dataGridView1.AutoGenerateColumns = false;
                 dataGridView1.DataSource = violations;
+                
 
                 dataGridView1.Columns.Clear();
                 dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
@@ -192,6 +194,12 @@ namespace TrafficFines
                     HeaderText = "Payment Amount",
                     DataPropertyName = "PaymentAmount",
                     DisplayIndex = 11
+                });
+                dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
+                {
+                    HeaderText = "Discount or Penalty Reason",
+                    DataPropertyName = "DiscountOrPenaltyReason",
+                    DisplayIndex = 12
                 });
             }
             catch (Exception ex)
@@ -546,7 +554,6 @@ namespace TrafficFines
                 fetchfineamount = (decimal?)resultfineamount;
                 Console.WriteLine($"Fine Amount: {fetchfineamount}\nComboBox ID: {id}");
 
-                // Label güncelleniyor
                 LabelFeeAmount.Text = fetchfineamount?.ToString() ?? "N/A";
             }
             catch (Exception ex)
@@ -621,6 +628,7 @@ namespace TrafficFines
                     {
                         EditProxyRadioButton.Checked = true;
                         richTextBoxEditDriverFullName.Enabled = true;
+                        richTextBoxDriverFullName.Text = item.DriverFullName;
                         LabelEditFeeAmount.Text = item.FineAmount.ToString();
                     }
                     LabelEditFeeAmount.Text = item.FineAmount.ToString();
@@ -847,7 +855,10 @@ namespace TrafficFines
             else if (EditProxyRadioButton.Checked)
             {
                 richTextBoxEditDriverFullName.Enabled = true;
+                if (!string.IsNullOrEmpty(richTextBoxDriverFullName.Text))
+                {
                 richTextBoxEditDriverFullName.Text = "";
+                }
             }
         }
 

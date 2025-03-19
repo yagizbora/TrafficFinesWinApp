@@ -25,6 +25,7 @@ namespace TrafficFines
             textBoxModel.Text = "";
             dateTimePickerViolationDate.Value = DateTime.Now;
         }
+        public string? DiscountOrPenaltyReason = "";
         public void GetFine(int id)
         {
             try
@@ -50,7 +51,6 @@ namespace TrafficFines
                                "JOIN CARS C ON C.CarID = F.CarID " +
                                "JOIN TYPES_OF_VIOLATIONS T ON T.ViolationID = F.ViolationID " +
                                "WHERE F.ViolationFactID = @ViolationFactID;";
-
                 SqlCommand response = new(query, connection);
                 response.Parameters.AddWithValue("@ViolationFactID", id);
                 SqlDataReader reader = response.ExecuteReader();
@@ -88,21 +88,23 @@ namespace TrafficFines
                     decimal dailyPenalty = (decimal)50.1;
                     int discountrate = 25;
                     int ViolationDateControl = (checkPaymentDate - item.ViolationDate).Days;
-
                     if (ViolationDateControl > 10)
                     {
                         ViolationDateControl = ViolationDateControl - 10;
                         item.FineAmount += (ViolationDateControl) * dailyPenalty;
                         richTextBoxOverDueDays.Text = $"Payment date is delayed by {ViolationDateControl} days";
+                        DiscountOrPenaltyReason = $"Payment date is delayed by {ViolationDateControl} days";
                     }
                     if (ViolationDateControl < 7)
                     {
                         item.FineAmount -= item.FineAmount * discountrate / 100;
                         richTextBoxOverDueDays.Text = "Payment date is Not Delayed!. " + "\n" + $"You get {discountrate}% discount because you pay within 7 days after the fine is issued!";
+                        DiscountOrPenaltyReason = $"Payment with discount because payment within 7 days after the fine is issued! ";
                     }
                     if (ViolationDateControl < 10 || ViolationDateControl <= 0)
                     {
                         richTextBoxOverDueDays.Text = "Payment date is Not Delayed!.";
+                        DiscountOrPenaltyReason = "Normal Payment";
                     }
 
                     textBoxFineAmount.Text = item.FineAmount.ToString();
@@ -183,10 +185,11 @@ namespace TrafficFines
                     ViolationPaymentDate = DateTime.Now,
                     PaymentMethod = paymentmethodcontrol,
                     ViolationPayment = textBoxFineAmount.Text,
-                    PaymentAmount = textBoxFineAmount.Text
+                    PaymentAmount = textBoxFineAmount.Text,
+                    DiscountOrPenaltyReason = DiscountOrPenaltyReason?.ToString()
                 };
                 string query = "UPDATE FACTS_OF_VIOLATIONS SET is_paid = @is_paid,ReceiptNumber = @ReceiptNumber," +
-                    "ViolationPaymentDate = @ViolationPaymentDate,PaymentMethod = @PaymentMethod,PaymentAmount = @PaymentAmount WHERE ViolationFactID = @id";
+                    "ViolationPaymentDate = @ViolationPaymentDate,PaymentMethod = @PaymentMethod,PaymentAmount = @PaymentAmount,DiscountOrPenaltyReason = @DiscountOrPenaltyReason WHERE ViolationFactID = @id";
                 SqlCommand response = new(query, connection);
                 response.Parameters.AddWithValue("@is_paid",data.is_paid);
                 response.Parameters.AddWithValue("@PaymentAmonut", data.PaymentAmount);
@@ -194,6 +197,7 @@ namespace TrafficFines
                 response.Parameters.AddWithValue("@ViolationPaymentDate", data.ViolationPaymentDate);
                 response.Parameters.AddWithValue("@PaymentMethod", data.PaymentMethod);
                 response.Parameters.AddWithValue("@PaymentAmount", data.PaymentAmount);
+                response.Parameters.AddWithValue("@DiscountOrPenaltyReason", data.DiscountOrPenaltyReason);
                 response.Parameters.AddWithValue("@id",data.ViolationFactID);
                 int affectedrows = response.ExecuteNonQuery();
                 if(affectedrows > 0)

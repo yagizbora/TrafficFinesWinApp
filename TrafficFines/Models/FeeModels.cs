@@ -30,7 +30,7 @@ namespace TrafficFines.Models
         public decimal? PaymentAmount { get; set; }
         public string? PaymentMethod { get; set; }
         public DateTime? ViolationPaymentDate { get; set; }
-
+        public string? DiscountOrPenaltyReason { get; set; }
     }
     class AddFeeModels
     {
