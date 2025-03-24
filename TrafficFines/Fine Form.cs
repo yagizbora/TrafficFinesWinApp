@@ -79,7 +79,11 @@ namespace TrafficFines
                     connection?.Open();
                 }
 
-                string query = "SELECT F.ViolationFactID, C.LicensePlate, C.OwnerFullName,  T.ViolationType, F.FineAmount, F.ViolationDate, F.is_paid,  F.ViolationPaymentDate, F.PaymentAmount, F.PaymentMethod,  F.DriverFullName, F.RightOfManagement, F.DiscountOrPenaltyReason  FROM FACTS_OF_VIOLATIONS F JOIN CARS C ON F.CarID = C.CarID JOIN TYPES_OF_VIOLATIONS T ON F.ViolationID = T.ViolationID   ORDER BY F.ViolationDate DESC;";
+                string query = "SELECT F.ViolationFactID, C.LicensePlate, C.OwnerFullName, " +
+                    " T.ViolationType, F.FineAmount, F.ViolationDate, F.is_paid, " +
+                    " F.ViolationPaymentDate, F.PaymentAmount, F.PaymentMethod,  F.DriverFullName, F.RightOfManagement, F.DiscountOrPenaltyReason " +
+                    " FROM FACTS_OF_VIOLATIONS F JOIN CARS C ON F.CarID = C.CarID JOIN TYPES_OF_VIOLATIONS T ON F.ViolationID = T.ViolationID  " +
+                    " ORDER BY F.ViolationDate DESC;";
 
 
                 SqlCommand command = new(query, connection);
