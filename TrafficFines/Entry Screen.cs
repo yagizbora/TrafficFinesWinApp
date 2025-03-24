@@ -19,6 +19,7 @@ namespace TrafficFines
 
         Fine? feeforms;
 
+
         private void Form1_Load(object sender, EventArgs e)
         {
             try
@@ -33,12 +34,14 @@ namespace TrafficFines
                 }
 
                 connection = new SqlConnection(connectionString);
+
                 //Console.WriteLine(connectionString);
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Hata: " + "\n" + (ex?.Message ?? "Bilinmeyen bir hata oluştu."));
             }
+
         }
 
         private void button1_Click(object sender, EventArgs e)
