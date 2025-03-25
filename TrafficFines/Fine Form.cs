@@ -1,6 +1,7 @@
 ﻿using DotNetEnv;
 using Microsoft.Data.SqlClient;
 using System.Data;
+using System.Data.Common;
 using System.Text.Json;
 using TrafficFines.Models;
 
@@ -81,7 +82,7 @@ namespace TrafficFines
 
                 string query = "SELECT F.ViolationFactID, C.LicensePlate, C.OwnerFullName, " +
                     " T.ViolationType, F.FineAmount, F.ViolationDate, F.is_paid, " +
-                    " F.ViolationPaymentDate, F.PaymentAmount, F.PaymentMethod,  F.DriverFullName, F.RightOfManagement, F.DiscountOrPenaltyReason " +
+                    " F.ViolationPaymentDate, F.PaymentAmount, F.PaymentMethod,  F.DriverFullName, F.RightOfManagement, F.DiscountOrPenaltyReason,F.ViolationDetection " +
                     " FROM FACTS_OF_VIOLATIONS F JOIN CARS C ON F.CarID = C.CarID JOIN TYPES_OF_VIOLATIONS T ON F.ViolationID = T.ViolationID  " +
                     " ORDER BY F.ViolationDate DESC;";
 
@@ -99,6 +100,7 @@ namespace TrafficFines
                     {
                         ViolationFactID = reader["ViolationFactID"] != DBNull.Value ? Convert.ToInt32(reader["ViolationFactID"]) : (int?)null,
                         LicensePlate = reader["LicensePlate"]?.ToString(),
+                        ViolationDetection = reader["ViolationDetection"]?.ToString(),
                         OwnerFullName = reader["OwnerFullName"]?.ToString(),
                         ViolationType = reader["ViolationType"]?.ToString(),
                         FineAmount = reader["FineAmount"] != DBNull.Value ? Convert.ToDecimal(reader["FineAmount"]) : (decimal?)null,
@@ -161,43 +163,60 @@ namespace TrafficFines
                     HeaderText = "Driver Name",
                     DataPropertyName = "DriverFullName",
                     DisplayIndex = 6
+                });                
+                dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
+                {
+                    HeaderText = "Violation Detection",
+                    DataPropertyName = "ViolationDetection",
+                    DisplayIndex = 7,
+                    Width = 200,
+                    
                 });
                 dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
                 {
                     HeaderText = "Right of Management",
                     DataPropertyName = "RightOfManagement",
-                    DisplayIndex = 7
+                    DisplayIndex = 8
                 });
                 dataGridView1.Columns.Add(new DataGridViewCheckBoxColumn
                 {
                     HeaderText = "Is paid?",
                     DataPropertyName = "is_paid",
-                    DisplayIndex = 8
+                    DisplayIndex = 9
                 });
                 dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
                 {
                     HeaderText = "Violation Payment Date",
                     DataPropertyName = "ViolationPaymentDate",
-                    DisplayIndex = 9
+                    DisplayIndex = 10
                 });
                 dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
                 {
                     HeaderText = "Payment Method",
                     DataPropertyName = "PaymentMethod",
-                    DisplayIndex = 10
+                    DisplayIndex = 11
                 });
                 dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
                 {
                     HeaderText = "Payment Amount",
                     DataPropertyName = "PaymentAmount",
-                    DisplayIndex = 11
+                    DisplayIndex = 12
                 });
                 dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
                 {
                     HeaderText = "Discount or Penalty Reason",
                     DataPropertyName = "DiscountOrPenaltyReason",
-                    DisplayIndex = 12
+                    DisplayIndex = 13
                 });
+                dataGridView1.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+                dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders;
+                dataGridView1.AllowUserToResizeColumns = true;
+                dataGridView1.AllowUserToResizeRows = true;
+                dataGridView1.Rows[0].Height = 50;
+                dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+                dataGridView1.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+
+
             }
             catch (Exception ex)
             {
@@ -274,15 +293,13 @@ namespace TrafficFines
                             });
                         }
 
-                        // Cars verilerini comboBox'a yükleme
                         CarEditComboBox.DataSource = carData;
-                        CarEditComboBox.DisplayMember = "LicensePlate";  // LicensePlate'yi gösterebiliriz
+                        CarEditComboBox.DisplayMember = "LicensePlate";  
                         CarEditComboBox.ValueMember = "CarID";
                         CarEditComboBox.SelectedValue = carId;
                     }
                 }
 
-                // Cars verileri tamamlandıktan sonra Violations verilerini alıyoruz
                 string violationQuery = "SELECT ViolationID, ViolationType FROM TYPES_OF_VIOLATIONS";
                 using (SqlCommand violationResponse = new(violationQuery, connection))
                 {
@@ -299,7 +316,6 @@ namespace TrafficFines
                             });
                         }
 
-                        // Violations verilerini comboBox'a yükleme
                         comboBoxEditViolations.DataSource = violationData;
                         comboBoxEditViolations.DisplayMember = "ViolationType";
                         comboBoxEditViolations.ValueMember = "ViolationID";
@@ -337,6 +353,8 @@ namespace TrafficFines
             ShowViolations();
             LoadCars();
             LoadViolations();
+            dataGridView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -374,10 +392,7 @@ namespace TrafficFines
         private void radiobutton_checkedchanged(object sender, EventArgs e)
         {
             RadioButton? rb = sender as RadioButton;
-            //if (rb != null && rb.Checked)
-            //{
-            //    MessageBox.Show("Seçilen: " + rb.Text);
-            //}
+
             if (radioButton1.Checked)
             {
                 if (richTextBoxDriverFullName.Enabled == true)
@@ -390,15 +405,13 @@ namespace TrafficFines
                     {
                         connection?.Open();
                     }
-                    //richTextBoxDriverFullName
-                    //Console.WriteLine(carid);
+
                     int? carid = (int?)CarComboBox.SelectedValue;
 
                     string query = "SELECT OwnerFullName FROM CARS WHERE CarID = @id";
                     SqlCommand response = new(query, connection);
                     response.Parameters.AddWithValue("@id", carid);
                     object data = response.ExecuteScalar();
-                    //Console.WriteLine(data);
                     if (data != null)
                     {
                         var result = new
@@ -406,7 +419,6 @@ namespace TrafficFines
                             OwnerFullName = data.ToString()
                         };
                         string json = JsonSerializer.Serialize(result);
-                        //Console.WriteLine(json);
                         richTextBoxDriverFullName.Text = result.OwnerFullName;
                     }
                     else
@@ -488,10 +500,11 @@ namespace TrafficFines
                     DriverFullName = richTextBoxDriverFullName.Text.ToString(),
                     ViolationDate = ViolationDate.Value,
                     RightOfManagement = ownerorproxycontrol,
-                    FineAmount = (decimal)fetchfineamount
+                    FineAmount = (decimal)fetchfineamount,
+                    ViolationDetection = (string)richTextBoxViolationDetection.Text.ToString()
                 };
-                string query = "INSERT INTO FACTS_OF_VIOLATIONS (CarID, ViolationID, ViolationDate, DriverFullName, RightOfManagement,FineAmount,is_paid) " +
-                       "VALUES (@CarID, @ViolationID, @ViolationDate, @DriverFullName, @RightOfManagement,@FineAmount,@is_paid)";
+                string query = "INSERT INTO FACTS_OF_VIOLATIONS (CarID, ViolationID, ViolationDate, DriverFullName, RightOfManagement,FineAmount,is_paid,ViolationDetection) " +
+                       "VALUES (@CarID, @ViolationID, @ViolationDate, @DriverFullName, @RightOfManagement,@FineAmount,@is_paid,@ViolationDetection)";
                 SqlCommand response = new(query, connection);
                 response.Parameters.AddWithValue("@CarID", data.Carid);
                 response.Parameters.AddWithValue("@ViolationID", data.ViolationID);
@@ -500,6 +513,7 @@ namespace TrafficFines
                 response.Parameters.AddWithValue("@RightOfManagement", data.RightOfManagement);
                 response.Parameters.AddWithValue("@FineAmount", data.FineAmount);
                 response.Parameters.AddWithValue("@is_paid", false);
+                response.Parameters.AddWithValue("@ViolationDetection", data.ViolationDetection);
                 int affectedRows = response.ExecuteNonQuery();
 
                 if (affectedRows > 0)
@@ -600,6 +614,7 @@ namespace TrafficFines
                             DriverFullName = reader["DriverFullName"]?.ToString(),
                             RightOfManagement = reader["RightOfManagement"]?.ToString(),
                             FineAmount = (decimal)(reader["FineAmount"] != DBNull.Value ? Convert.ToDecimal(reader["FineAmount"]) : (decimal?)0),
+                            ViolationDetection = reader["ViolationDetection"]?.ToString()
                         });
 
                     }
@@ -629,6 +644,7 @@ namespace TrafficFines
                         LabelEditFeeAmount.Text = item.FineAmount.ToString();
                     }
                     LabelEditFeeAmount.Text = item.FineAmount.ToString();
+                    richTextBoxEditViolationDetection.Text = item.ViolationDetection;
                 }
             }
             catch (Exception ex)
@@ -692,14 +708,16 @@ namespace TrafficFines
                     DriverFullName = richTextBoxEditDriverFullName.Text.ToString(),
                     ViolationDate = EditViolationDate.Value,
                     RightOfManagement = ownerorproxycontrol,
-                    FineAmount = (decimal)fetchfineamount
+                    FineAmount = (decimal)fetchfineamount,
+                    ViolationDetection = richTextBoxEditViolationDetection.Text.ToString()
                 };
 
                 string query = "UPDATE FACTS_OF_VIOLATIONS SET CarID = @carid," +
                     "ViolationID = @ViolationID, ViolationDate = @violationdate," +
                     "DriverFullname = @DriverFullname," +
                     "RightOfManagement = @RightOfManagement," +
-                    "FineAmount = @FineAmount" +
+                    "FineAmount = @FineAmount," +
+                    "ViolationDetection = @ViolationDetection " +
                     "WHERE ViolationFactId= @id";
                 SqlCommand response = new(query, connection);
                 response.Parameters.AddWithValue("@id", data.ViolationFactID);
@@ -709,6 +727,7 @@ namespace TrafficFines
                 response.Parameters.AddWithValue("@DriverFullName", data.DriverFullName);
                 response.Parameters.AddWithValue("@RightOfManagement", data.RightOfManagement);
                 response.Parameters.AddWithValue("@FineAmount", data.FineAmount);
+                response.Parameters.AddWithValue("@ViolationDetection", data.ViolationDetection);
                 int affectedRows = response.ExecuteNonQuery();
 
                 if (affectedRows > 0)

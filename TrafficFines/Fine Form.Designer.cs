@@ -46,9 +46,13 @@ namespace TrafficFines
             label4 = new Label();
             button1 = new Button();
             groupBox2 = new GroupBox();
+            label6 = new Label();
+            richTextBoxViolationDetection = new RichTextBox();
             LabelFeeAmount = new Label();
             label5 = new Label();
             groupBox3 = new GroupBox();
+            label12 = new Label();
+            richTextBoxEditViolationDetection = new RichTextBox();
             button3 = new Button();
             LabelEditFeeAmount = new Label();
             label7 = new Label();
@@ -75,11 +79,12 @@ namespace TrafficFines
             // 
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.AllowUserToDeleteRows = false;
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(12, 254);
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            dataGridView1.Location = new Point(12, 244);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
-            dataGridView1.Size = new Size(1094, 150);
+            dataGridView1.Size = new Size(1252, 160);
             dataGridView1.TabIndex = 0;
             dataGridView1.CellClick += dataGridView1_CellClick;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
@@ -148,7 +153,7 @@ namespace TrafficFines
             // richTextBoxDriverFullName
             // 
             richTextBoxDriverFullName.Enabled = false;
-            richTextBoxDriverFullName.Location = new Point(13, 129);
+            richTextBoxDriverFullName.Location = new Point(277, 37);
             richTextBoxDriverFullName.Name = "richTextBoxDriverFullName";
             richTextBoxDriverFullName.Size = new Size(139, 43);
             richTextBoxDriverFullName.TabIndex = 7;
@@ -158,7 +163,7 @@ namespace TrafficFines
             // 
             groupBox1.Controls.Add(radioButton2);
             groupBox1.Controls.Add(radioButton1);
-            groupBox1.Location = new Point(304, 37);
+            groupBox1.Location = new Point(449, 22);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(130, 109);
             groupBox1.TabIndex = 8;
@@ -193,7 +198,7 @@ namespace TrafficFines
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(13, 111);
+            label4.Location = new Point(277, 19);
             label4.Name = "label4";
             label4.Size = new Size(95, 15);
             label4.TabIndex = 9;
@@ -201,7 +206,7 @@ namespace TrafficFines
             // 
             // button1
             // 
-            button1.Location = new Point(223, 107);
+            button1.Location = new Point(158, 89);
             button1.Name = "button1";
             button1.Size = new Size(75, 23);
             button1.TabIndex = 10;
@@ -212,6 +217,8 @@ namespace TrafficFines
             // groupBox2
             // 
             groupBox2.BackColor = SystemColors.MenuHighlight;
+            groupBox2.Controls.Add(label6);
+            groupBox2.Controls.Add(richTextBoxViolationDetection);
             groupBox2.Controls.Add(LabelFeeAmount);
             groupBox2.Controls.Add(label5);
             groupBox2.Controls.Add(richTextBoxDriverFullName);
@@ -226,15 +233,32 @@ namespace TrafficFines
             groupBox2.Controls.Add(ViolationDate);
             groupBox2.Location = new Point(12, 21);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(448, 227);
+            groupBox2.Size = new Size(649, 217);
             groupBox2.TabIndex = 11;
             groupBox2.TabStop = false;
             groupBox2.Text = "Create Fine";
             // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(13, 141);
+            label6.Name = "label6";
+            label6.Size = new Size(108, 15);
+            label6.TabIndex = 14;
+            label6.Text = "Violation Detection";
+            // 
+            // richTextBoxViolationDetection
+            // 
+            richTextBoxViolationDetection.Location = new Point(13, 162);
+            richTextBoxViolationDetection.Name = "richTextBoxViolationDetection";
+            richTextBoxViolationDetection.Size = new Size(630, 43);
+            richTextBoxViolationDetection.TabIndex = 13;
+            richTextBoxViolationDetection.Text = "";
+            // 
             // LabelFeeAmount
             // 
             LabelFeeAmount.AutoSize = true;
-            LabelFeeAmount.Location = new Point(237, 85);
+            LabelFeeAmount.Location = new Point(94, 116);
             LabelFeeAmount.Name = "LabelFeeAmount";
             LabelFeeAmount.Size = new Size(12, 15);
             LabelFeeAmount.TabIndex = 12;
@@ -243,7 +267,7 @@ namespace TrafficFines
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(156, 85);
+            label5.Location = new Point(13, 116);
             label5.Name = "label5";
             label5.Size = new Size(79, 15);
             label5.TabIndex = 11;
@@ -252,6 +276,8 @@ namespace TrafficFines
             // groupBox3
             // 
             groupBox3.BackColor = SystemColors.MenuHighlight;
+            groupBox3.Controls.Add(label12);
+            groupBox3.Controls.Add(richTextBoxEditViolationDetection);
             groupBox3.Controls.Add(button3);
             groupBox3.Controls.Add(LabelEditFeeAmount);
             groupBox3.Controls.Add(label7);
@@ -265,12 +291,29 @@ namespace TrafficFines
             groupBox3.Controls.Add(label10);
             groupBox3.Controls.Add(label11);
             groupBox3.Controls.Add(EditViolationDate);
-            groupBox3.Location = new Point(466, 21);
+            groupBox3.Location = new Point(667, 21);
             groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(640, 227);
+            groupBox3.Size = new Size(597, 217);
             groupBox3.TabIndex = 12;
             groupBox3.TabStop = false;
             groupBox3.Text = "Edit Fine";
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new Point(17, 141);
+            label12.Name = "label12";
+            label12.Size = new Size(108, 15);
+            label12.TabIndex = 16;
+            label12.Text = "Violation Detection";
+            // 
+            // richTextBoxEditViolationDetection
+            // 
+            richTextBoxEditViolationDetection.Location = new Point(13, 162);
+            richTextBoxEditViolationDetection.Name = "richTextBoxEditViolationDetection";
+            richTextBoxEditViolationDetection.Size = new Size(578, 43);
+            richTextBoxEditViolationDetection.TabIndex = 15;
+            richTextBoxEditViolationDetection.Text = "";
             // 
             // button3
             // 
@@ -303,7 +346,7 @@ namespace TrafficFines
             // richTextBoxEditDriverFullName
             // 
             richTextBoxEditDriverFullName.Enabled = false;
-            richTextBoxEditDriverFullName.Location = new Point(278, 37);
+            richTextBoxEditDriverFullName.Location = new Point(277, 40);
             richTextBoxEditDriverFullName.Name = "richTextBoxEditDriverFullName";
             richTextBoxEditDriverFullName.Size = new Size(179, 43);
             richTextBoxEditDriverFullName.TabIndex = 7;
@@ -313,7 +356,7 @@ namespace TrafficFines
             // 
             button2.Location = new Point(166, 103);
             button2.Name = "button2";
-            button2.Size = new Size(95, 23);
+            button2.Size = new Size(100, 23);
             button2.TabIndex = 10;
             button2.Text = "Edit the Fine";
             button2.UseVisualStyleBackColor = true;
@@ -331,7 +374,7 @@ namespace TrafficFines
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(278, 19);
+            label8.Location = new Point(277, 22);
             label8.Name = "label8";
             label8.Size = new Size(95, 15);
             label8.TabIndex = 9;
@@ -350,7 +393,7 @@ namespace TrafficFines
             // 
             groupBox4.Controls.Add(EditProxyRadioButton);
             groupBox4.Controls.Add(EditOwnerRadioButton);
-            groupBox4.Location = new Point(504, 37);
+            groupBox4.Location = new Point(467, 22);
             groupBox4.Name = "groupBox4";
             groupBox4.Size = new Size(130, 109);
             groupBox4.TabIndex = 8;
@@ -424,7 +467,7 @@ namespace TrafficFines
             AutoScaleMode = AutoScaleMode.Font;
             AutoScroll = true;
             BackColor = SystemColors.MenuHighlight;
-            ClientSize = new Size(1118, 416);
+            ClientSize = new Size(1276, 416);
             Controls.Add(groupBox3);
             Controls.Add(groupBox2);
             Controls.Add(dataGridView1);
@@ -479,5 +522,9 @@ namespace TrafficFines
         private Label label11;
         private DateTimePicker EditViolationDate;
         private Button button3;
+        private Label label6;
+        private RichTextBox richTextBoxViolationDetection;
+        private Label label12;
+        private RichTextBox richTextBoxEditViolationDetection;
     }
 }

@@ -219,11 +219,10 @@
             // dataGridViewCars
             // 
             dataGridViewCars.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCars.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewCars.Location = new Point(12, 183);
             dataGridViewCars.Name = "dataGridViewCars";
             dataGridViewCars.ReadOnly = true;
-            dataGridViewCars.Size = new Size(1151, 153);
+            dataGridViewCars.Size = new Size(1151, 193);
             dataGridViewCars.TabIndex = 12;
             dataGridViewCars.CellClick += dataGridViewCars_CellClick;
             // 
@@ -417,7 +416,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.RosyBrown;
-            ClientSize = new Size(1165, 339);
+            ClientSize = new Size(1165, 388);
             Controls.Add(groupBox2);
             Controls.Add(dataGridViewCars);
             Controls.Add(groupBox1);
