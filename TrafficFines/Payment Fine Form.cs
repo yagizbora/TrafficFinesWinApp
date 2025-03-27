@@ -117,7 +117,7 @@ namespace TrafficFines
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                MessageBox.Show("Error: " + ex.Message);
             }
             finally
             {
@@ -213,7 +213,7 @@ namespace TrafficFines
             }
             finally
             {
-
+                connection?.Close();
             }
         }
     }
