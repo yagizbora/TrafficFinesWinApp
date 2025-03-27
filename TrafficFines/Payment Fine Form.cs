@@ -204,8 +204,8 @@ namespace TrafficFines
                 {
                     MessageBox.Show("Payment is updated fine is paid!", "Successfully!");
                     ClearAllField();
-                }
-                ;
+                };
+                
             }
             catch (Exception ex)
             {
