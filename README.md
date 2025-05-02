@@ -22,7 +22,6 @@ The database schema is defined in **MSSQL**, and the SQL script to create the ne
 
 - **C#** (.NET Framework, Windows Forms/WPF)
 - **SQL Server**
-- **Entity Framework** (for database interactions)
 
 
 ## Future Enhancements
