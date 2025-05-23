@@ -5,7 +5,6 @@
         public int? id { get; set; }
         public string? ViolationType { get; set; }
         public decimal? FineAmount { get; set; }
-
     }
     class AddViolationModel
     {

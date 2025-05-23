@@ -204,7 +204,7 @@ namespace TrafficFines
                 });
                 dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
                 {
-                    HeaderText = "Discount or Penalty Reason",
+                    HeaderText = "Discount/Penalty Reason",
                     DataPropertyName = "DiscountOrPenaltyReason",
                     DisplayIndex = 13
                 });
@@ -215,7 +215,7 @@ namespace TrafficFines
                 dataGridView1.Rows[0].Height = 50;
                 dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
                 dataGridView1.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-
+                    
 
             }
             catch (Exception ex)
@@ -267,7 +267,7 @@ namespace TrafficFines
             }
         }
 
-        public void EditLoadCarsAndViolations(int carId, int violationId)
+        public void EditLoadCarsAndViolations(int? carId, int? violationId)
         {
             try
             {
@@ -621,7 +621,7 @@ namespace TrafficFines
                 }
                 foreach (var item in data)
                 {
-                    EditLoadCarsAndViolations((int)item.carId, (int)item.violationId);
+                    EditLoadCarsAndViolations((int?)item.carId, (int?)item.violationId);
                     if (item.ViolationDate.HasValue)
                     {
                         EditViolationDate.Value = item.ViolationDate.Value;
